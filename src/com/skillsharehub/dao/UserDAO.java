@@ -26,6 +26,10 @@ public class UserDAO {
             statement.setString(5, user.getGender());
             statement.setDate(6, user.getDate_of_birth());
             statement.setString(7, user.getCity());
+            
+            System.out.println("Statement = "+statement);
+            System.out.println("User + "+ user);
+            
             statement.setString(8, user.getBio());
             statement.setString(9, user.getProfileImage());
 
