@@ -8,7 +8,7 @@
 <body>
 	<h1>Register</h1>
  <div class="form-container">
-  <form action="register" method="post" enctype="multipart/form-data">
+  <form id="registerForm" action="register" method="post" enctype="multipart/form-data">
 
     <div class="container">
       <label>Full name: </label>
@@ -24,9 +24,7 @@
       <label>Password: </label>
       <input type="password" name="password" placeholder="Password" required>
     </div>
-    
-    <br><br>
-    
+        
     <div class="container">
       <label>Phone: </label>
       <input type="text" name="phone" placeholder="Phone" required>
@@ -63,5 +61,9 @@
     
   </form>
 </div>
+
+<script src="../js/register.js"></script>
+
+
 </body>
 </html>
