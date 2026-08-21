@@ -1,42 +1,42 @@
 package com.skillsharehub.dao;
 
-import java.sql.Date;
+import java.sql.SQLException;
 
+import com.skillsharehub.dao.UserDAO;
 import com.skillsharehub.model.User;
 
 public class UserDAOTest {
 
     public static void main(String[] args) {
 
-        // Create User object
-        User user = new User();
-
-        // Set user data
-        user.setFullName("Deep Test");
-        user.setEmail("deeptest@example.com");
-        user.setPassword("test123");
-        user.setPhone("9876543210");
-        user.setGender("Male");
-        user.setDate_of_birth(Date.valueOf("2005-01-15"));
-        user.setCity("Ahmedabad");
-        user.setBio("UserDAO testing");
-        user.setProfileImage(null);
-
-        // Create UserDAO object
         UserDAO userDAO = new UserDAO();
+
+        // Use an email and password of an existing user
+        String email = "test19@gmail.com";
+        String password = "@gmail.ocom";
 
         try {
 
-            boolean result = userDAO.insertUser(user);
+            User user = userDAO.loginUser(email, password);
 
-            if (result) {
-                System.out.println("User inserted successfully.");
+            if (user != null) {
+
+                System.out.println("Login successful.");
+                System.out.println("User ID: " + user.getUserId());
+                System.out.println("Full Name: " + user.getFullName());
+                System.out.println("Email: " + user.getEmail());
+
             } else {
-                System.out.println("User insertion failed.");
+
+                System.out.println("Invalid email or password.");
+
             }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
+
+            System.out.println("Database error occurred.");
             e.printStackTrace();
+
         }
     }
 }

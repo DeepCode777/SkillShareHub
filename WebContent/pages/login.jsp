@@ -1,29 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Login</title>
+    <meta charset="UTF-8">
+    <title>Login</title>
 </head>
 <body>
-	<h1>Login</h1>
- <div class="box1">
-  <form>
-    
-    <label>Email ID:</label>
-    <input type="text" name="Email" placeholder="Email ID">
-    
-    <br><br>
-    
-    <label>Password: </label>
-    <input type="password" name="password" name="pass" placeholder="Password">
-    
-    <button type="submit" value="Register">
-      Register 
-    </button>
-    
-  </form>
-</div>
+
+    <h1>Login</h1>
+
+    <div class="form-container">
+
+        <form action="login" method="post" id="loginForm">
+
+            <div class="container">
+                <label>Email ID:</label>
+                <input type="email" name="email" placeholder="Email ID" required>
+            </div>
+
+            <div class="container">
+                <label>Password:</label>
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+    </div>
+	<script src="../js/login.js"></script>
 </body>
 </html>

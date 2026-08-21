@@ -15,8 +15,49 @@ public class UserDAO {
             + "(full_name, email, password, phone, gender, date_of_birth, city, bio, profile_image, created_at) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
     
+    private static final String LOGIN_USER_SQL = "SELECT "
+    		+ "user_id, full_name, email, password, phone, gender, date_of_birth, city, bio, profile_image, created_at "
+            + "FROM users WHERE email = ? AND password = ?";
+    
     private static final String CHECK_EMAIL_SQL = "SELECT COUNT(*) FROM users WHERE email = ?";
     
+    // User Login
+    public User loginUser(String email, String password) throws SQLException {
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(LOGIN_USER_SQL)) {
+
+            statement.setString(1, email);
+            statement.setString(2, password);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+
+                    User user = new User();
+
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setFullName(resultSet.getString("full_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setPhone(resultSet.getString("phone"));
+                    user.setGender(resultSet.getString("gender"));
+                    user.setDate_of_birth(resultSet.getDate("date_of_birth"));
+                    user.setCity(resultSet.getString("city"));
+                    user.setBio(resultSet.getString("bio"));
+                    user.setProfileImage(resultSet.getString("profile_image"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+
+                    return user;
+                }
+            }
+        }
+
+        return null;
+    }
+    
+    
+    // Check Email Is Exist 
     public boolean isEmailExists(String email) throws SQLException {
 
         try (Connection connection = DBConnection.getConnection();
