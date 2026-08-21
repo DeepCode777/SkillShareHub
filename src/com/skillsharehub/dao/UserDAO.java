@@ -2,6 +2,7 @@ package com.skillsharehub.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.skillsharehub.model.User;
@@ -13,6 +14,26 @@ public class UserDAO {
             "INSERT INTO users "
             + "(full_name, email, password, phone, gender, date_of_birth, city, bio, profile_image, created_at) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+    
+    private static final String CHECK_EMAIL_SQL = "SELECT COUNT(*) FROM users WHERE email = ?";
+    
+    public boolean isEmailExists(String email) throws SQLException {
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(CHECK_EMAIL_SQL)) {
+
+            statement.setString(1, email);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
+            }
+        }
+
+        return false;
+    }
 
     public boolean insertUser(User user) throws SQLException {
 
@@ -34,4 +55,6 @@ public class UserDAO {
             return rowsAffected == 1;
         }
     }
+    
+    
 }

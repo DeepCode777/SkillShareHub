@@ -1,9 +1,11 @@
 package com.skillsharehub.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -58,6 +60,22 @@ public class RegistrationServlet extends HttpServlet {
     	    out.println("Please enter a valid email address.");
     	    return;
     	}
+    	
+    	// Create UserDAO object
+    	UserDAO userDAO = new UserDAO();
+    	// Duplicate Email Check
+    	try {
+
+    	    if (userDAO.isEmailExists(email)) {
+    	        out.println("Email is already registered.");
+    	        return;
+    	    }
+
+    	} catch (SQLException e) {
+    	    e.printStackTrace();
+    	    out.println("Database error occurred while checking email.");
+    	    return;
+    	}
         
     	// Password Validation
     	String password = request.getParameter("password");
@@ -102,6 +120,7 @@ public class RegistrationServlet extends HttpServlet {
     	    out.println("Please select your gender.");
     	    return;
     	}
+    	gender = gender.trim();
 
     	if (!gender.equals("Male") &&
     	    !gender.equals("Female") &&
@@ -193,7 +212,45 @@ public class RegistrationServlet extends HttpServlet {
     	        return;
     	    }
     	}
+    	
+    	String profileImageName = null;
+
+    	if (profilePicture != null && profilePicture.getSize() > 0) {
+
+    	    String originalFileName = profilePicture.getSubmittedFileName();
+
+    	    String extension = "";
+
+    	    int dotIndex = originalFileName.lastIndexOf(".");
+
+    	    if (dotIndex != -1) {
+    	        extension = originalFileName.substring(dotIndex).toLowerCase();
+    	    }
+
+    	    profileImageName = UUID.randomUUID().toString() + extension;
+    	}
         
+    	// Image Path
+    	String uploadPath = getServletContext().getRealPath("/images/profile");
+    	
+    	File uploadDirectory = new File(uploadPath);
+
+    	if (!uploadDirectory.exists()) {
+    	    uploadDirectory.mkdirs();
+    	}
+    	
+    	boolean imageSaved = false;
+    	
+    	//Save Profile Image
+    	if (profilePicture != null && profilePicture.getSize() > 0) {
+
+    	    String filePath = uploadPath + File.separator + profileImageName;
+
+    	    profilePicture.write(filePath);
+    	    
+    	    imageSaved = true;
+    	    
+    	}
 
         // Create User object
         User user = new User();
@@ -208,11 +265,9 @@ public class RegistrationServlet extends HttpServlet {
         user.setBio(bio);
         
         // Profile image
-        user.setProfileImage(null);
-
-        // Create DAO
-        UserDAO userDAO = new UserDAO();
-
+        user.setProfileImage(profileImageName);
+        
+        // Insert
         try {
 
             boolean result = userDAO.insertUser(user);
@@ -224,7 +279,20 @@ public class RegistrationServlet extends HttpServlet {
             }
 
         } catch (SQLException e) {
+
             e.printStackTrace();
+
+            if (imageSaved) {
+
+                String filePath = uploadPath + File.separator + profileImageName;
+
+                File uploadedFile = new File(filePath);
+
+                if (uploadedFile.exists()) {
+                    uploadedFile.delete();
+                }
+            }
+
             out.println("Database error occurred.");
         }
     }
