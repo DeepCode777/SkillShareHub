@@ -213,44 +213,11 @@ public class RegistrationServlet extends HttpServlet {
     	    }
     	}
     	
-    	String profileImageName = null;
-
-    	if (profilePicture != null && profilePicture.getSize() > 0) {
-
-    	    String originalFileName = profilePicture.getSubmittedFileName();
-
-    	    String extension = "";
-
-    	    int dotIndex = originalFileName.lastIndexOf(".");
-
-    	    if (dotIndex != -1) {
-    	        extension = originalFileName.substring(dotIndex).toLowerCase();
-    	    }
-
-    	    profileImageName = UUID.randomUUID().toString() + extension;
-    	}
-        
-    	// Image Path
     	String uploadPath = getServletContext().getRealPath("/images/profile");
-    	
-    	File uploadDirectory = new File(uploadPath);
 
-    	if (!uploadDirectory.exists()) {
-    	    uploadDirectory.mkdirs();
-    	}
-    	
-    	boolean imageSaved = false;
-    	
-    	//Save Profile Image
-    	if (profilePicture != null && profilePicture.getSize() > 0) {
+    	String profileImageName = saveProfileImage(profilePicture, uploadPath);
 
-    	    String filePath = uploadPath + File.separator + profileImageName;
-
-    	    profilePicture.write(filePath);
-    	    
-    	    imageSaved = true;
-    	    
-    	}
+    	boolean imageSaved = profileImageName != null;
 
         // Create User object
         User user = new User();
@@ -283,17 +250,61 @@ public class RegistrationServlet extends HttpServlet {
             e.printStackTrace();
 
             if (imageSaved) {
-
-                String filePath = uploadPath + File.separator + profileImageName;
-
-                File uploadedFile = new File(filePath);
-
-                if (uploadedFile.exists()) {
-                    uploadedFile.delete();
-                }
+                deleteProfileImage(uploadPath, profileImageName);
             }
-
             out.println("Database error occurred.");
+        }
+    }
+    private String saveProfileImage(Part profilePicture, String uploadPath)
+            throws IOException {
+
+        if (profilePicture == null || profilePicture.getSize() == 0) {
+            return null;
+        }
+
+        String originalFileName = profilePicture.getSubmittedFileName();
+
+        if (originalFileName == null || originalFileName.isEmpty()) {
+            throw new IOException("Invalid profile image filename.");
+        }
+
+        String extension = "";
+
+        int dotIndex = originalFileName.lastIndexOf(".");
+
+        if (dotIndex != -1) {
+            extension = originalFileName.substring(dotIndex).toLowerCase();
+        }
+
+        String profileImageName = UUID.randomUUID().toString() + extension;
+
+        File uploadDirectory = new File(uploadPath);
+
+        if (!uploadDirectory.exists()) {
+            if(!uploadDirectory.mkdirs()) {
+            	throw new IOException();
+            }
+        }
+
+        String filePath = uploadPath + File.separator + profileImageName;
+
+        profilePicture.write(filePath);
+
+        return profileImageName;
+    }
+    
+    private void deleteProfileImage(String uploadPath, String profileImageName) {
+
+        if (profileImageName == null) {
+            return;
+        }
+
+        String filePath = uploadPath + File.separator + profileImageName;
+
+        File uploadedFile = new File(filePath);
+
+        if (uploadedFile.exists()) {
+            uploadedFile.delete();
         }
     }
 }
