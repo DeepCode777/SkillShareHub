@@ -17,18 +17,17 @@ public class UserDAO {
     
     private static final String LOGIN_USER_SQL = "SELECT "
     		+ "user_id, full_name, email, password, phone, gender, date_of_birth, city, bio, profile_image, created_at "
-            + "FROM users WHERE email = ? AND password = ?";
+            + "FROM users WHERE email = ?";
     
     private static final String CHECK_EMAIL_SQL = "SELECT COUNT(*) FROM users WHERE email = ?";
     
     // User Login
-    public User loginUser(String email, String password) throws SQLException {
+    public User loginUser(String email) throws SQLException {
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(LOGIN_USER_SQL)) {
 
             statement.setString(1, email);
-            statement.setString(2, password);
 
             try (ResultSet resultSet = statement.executeQuery()) {
 

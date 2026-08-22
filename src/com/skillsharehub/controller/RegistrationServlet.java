@@ -17,6 +17,7 @@ import javax.servlet.http.Part;
 
 import com.skillsharehub.dao.UserDAO;
 import com.skillsharehub.model.User;
+import com.skillsharehub.util.PasswordUtil;
 
 @MultipartConfig
 @WebServlet("/pages/register")
@@ -93,6 +94,8 @@ public class RegistrationServlet extends HttpServlet {
     	            + " including uppercase, lowercase, number, special character.");
     	    return;
     	}
+    	
+    	String hashedPassword = PasswordUtil.hashPassword(password);
         
     	
     	// Phone Validation
@@ -224,7 +227,7 @@ public class RegistrationServlet extends HttpServlet {
 
         user.setFullName(fullName);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(hashedPassword);
         user.setPhone(phone);
         user.setGender(gender);
         user.setDate_of_birth(dateOfBirth);

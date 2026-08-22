@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.skillsharehub.dao.UserDAO;
 import com.skillsharehub.model.User;
+import com.skillsharehub.util.PasswordUtil;
 
 @WebServlet("/pages/login")
 public class LoginServlet extends HttpServlet {
@@ -49,17 +50,15 @@ public class LoginServlet extends HttpServlet {
             out.println("Password is required.");
             return;
         }
-
-        out.println("Login data received successfully.");
         
         UserDAO userDAO = new UserDAO();
 
         try {
 
-            User user = userDAO.loginUser(email, password);
+            User user = userDAO.loginUser(email);
 
             
-            if (user != null) {
+            if (user != null && PasswordUtil.checkPassword(password, user.getPassword())) {
 
                 HttpSession session = request.getSession();
 
@@ -79,6 +78,5 @@ public class LoginServlet extends HttpServlet {
 
             out.println("Database error occurred.");
         }
-
     }
 }
