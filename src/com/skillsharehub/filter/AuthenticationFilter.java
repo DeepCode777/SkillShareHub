@@ -31,6 +31,26 @@ public class AuthenticationFilter implements Filter {
             return;
         }
 
+     // Admin page authentication
+        if (requestedResource.equals("/pages/admin.jsp")) {
+
+            HttpSession session = httpRequest.getSession(false);
+
+            if (session != null &&
+                session.getAttribute("loggedInAdmin") != null) {
+
+                chain.doFilter(request, response);
+
+            } else {
+
+                httpResponse.sendRedirect(
+                        contextPath + "/pages/adminLogin.jsp"
+                );
+            }
+
+            return;
+        }
+        
         HttpSession session = httpRequest.getSession(false);
 
         if (session != null && session.getAttribute("loggedInUser") != null) {
@@ -46,8 +66,10 @@ public class AuthenticationFilter implements Filter {
     private boolean isPublicResource(String resource) {
 
         return resource.equals("/pages/login.jsp")
+        		|| resource.equals("/pages/adminLogin.jsp")
                 || resource.equals("/pages/register.jsp")
                 || resource.equals("/pages/login")
+                || resource.equals("/pages/adminLogin")
                 || resource.equals("/pages/register")
                 || resource.equals("/pages/logout");
     }
