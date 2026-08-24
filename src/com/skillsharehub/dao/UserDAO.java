@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.skillsharehub.model.User;
 import com.skillsharehub.util.DBConnection;
@@ -20,6 +22,10 @@ public class UserDAO {
             + "FROM users WHERE email = ?";
     
     private static final String CHECK_EMAIL_SQL = "SELECT COUNT(*) FROM users WHERE email = ?";
+    
+    private static final String GET_ALL_USERS_SQL =
+            "SELECT user_id, full_name, email, phone, gender, date_of_birth, city, bio, profile_image, created_at "
+            + "FROM users";
     
     // User Login
     public User loginUser(String email) throws SQLException {
@@ -73,6 +79,37 @@ public class UserDAO {
         }
 
         return false;
+    }
+    
+    // Get All Users
+    public List<User> getAllUsers() throws SQLException {
+
+        List<User> users = new ArrayList<>();
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS_SQL);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+
+                User user = new User();
+
+                user.setUserId(resultSet.getInt("user_id"));
+                user.setFullName(resultSet.getString("full_name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhone(resultSet.getString("phone"));
+                user.setGender(resultSet.getString("gender"));
+                user.setDate_of_birth(resultSet.getDate("date_of_birth"));
+                user.setCity(resultSet.getString("city"));
+                user.setBio(resultSet.getString("bio"));
+                user.setProfileImage(resultSet.getString("profile_image"));
+                user.setCreatedAt(resultSet.getTimestamp("created_at"));
+
+                users.add(user);
+            }
+        }
+
+        return users;
     }
 
     public boolean insertUser(User user) throws SQLException {
