@@ -13,6 +13,18 @@
 <%
 	List<User> users = (List<User>)request.getAttribute("users");
 %>
+<%
+    String deleteStatus = request.getParameter("delete");
+    if ("success".equals(deleteStatus)) {
+%>
+    <p>User deleted successfully.</p>
+<%
+    } else if ("failed".equals(deleteStatus)) {
+%>
+    <p>Failed to delete user.</p>
+<%
+    }
+%>
 	<h2>Manage Users</h2>
 
 <table border="1">
@@ -44,6 +56,20 @@
             <td><%= user.getBio() %></td>
             <td><%= user.getProfileImage() %></td>
             <td><%= user.getCreatedAt() %></td>
+			<td>
+			    <form method="post"
+			          action="${pageContext.request.contextPath}/pages/admin/users">
+			
+			        <input type="hidden" name="action" value="delete">
+			
+			        <input type="hidden"
+			               name="userId"
+			               value="<%= user.getUserId() %>">
+			
+			        <button type="submit" onclick="return confirm('Are You sure want to delete this user?');">Delete</button>
+			
+			    </form>
+			</td>
         </tr>
 
     <% } %>
@@ -51,7 +77,7 @@
 <% } else { %>
 
     <tr>
-        <td colspan="10">No users found.</td>
+        <td colspan="11">No users found.</td>
     </tr>
 
 <% } %>

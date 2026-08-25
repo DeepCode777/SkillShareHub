@@ -38,4 +38,49 @@ public class AdminUsersServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to load users.");
         }
     }
+    
+    // It Handle Delete User
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
+        if ("delete".equals(action)) {
+
+            String userIdParameter = request.getParameter("userId");
+
+            if (userIdParameter == null || userIdParameter.trim().isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/pages/admin/users");
+                return;
+            }
+
+            try {
+
+                int userId = Integer.parseInt(userIdParameter);
+                
+                // By pass the request of delete ID = 0,-1,-2....
+                if (userId <= 0) {
+                    response.sendRedirect(request.getContextPath() + "/pages/admin/users");
+                    return;
+                }
+                UserDAO userDAO = new UserDAO();
+
+                boolean deleted = userDAO.deleteUser(userId);
+
+                if (deleted) {
+
+                    response.sendRedirect(request.getContextPath() + "/pages/admin/users?delete=success");
+
+                } else {
+
+                    response.sendRedirect(request.getContextPath() + "/pages/admin/users?delete=failed");
+                }
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+                response.sendRedirect(request.getContextPath() + "/pages/admin/users");
+            }
+        }
+    }
 }

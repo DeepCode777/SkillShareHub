@@ -27,6 +27,8 @@ public class UserDAO {
             "SELECT user_id, full_name, email, phone, gender, date_of_birth, city, bio, profile_image, created_at "
             + "FROM users";
     
+    private static final String DELETE_USER_SQL = "DELETE FROM users WHERE user_id = ?";
+    
     // User Login
     public User loginUser(String email) throws SQLException {
 
@@ -133,5 +135,16 @@ public class UserDAO {
         }
     }
     
-    
+    public boolean deleteUser(int userId) throws SQLException {
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_USER_SQL)) {
+
+            statement.setInt(1, userId);
+
+            int rowsAffected = statement.executeUpdate();
+
+            return rowsAffected == 1;
+        }
+    }
 }
