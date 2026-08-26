@@ -82,5 +82,51 @@ public class AdminUsersServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/pages/admin/users");
             }
         }
+        
+        // View Users By ID (Admin)
+        if ("view".equals(action)) {
+
+            String userIdParameter = request.getParameter("userId");
+
+            if (userIdParameter == null || userIdParameter.trim().isEmpty()) {
+                response.sendRedirect(request.getContextPath() + "/pages/admin/users");
+                return;
+            }
+
+            try {
+
+                int userId = Integer.parseInt(userIdParameter);
+
+                if (userId <= 0) {
+                    response.sendRedirect(request.getContextPath() + "/pages/admin/users");
+                    return;
+                }
+
+                UserDAO userDAO = new UserDAO();
+
+                User user = userDAO.getUserById(userId);
+
+                if (user != null) {
+
+                    request.setAttribute("user", user);
+                    request.getRequestDispatcher("/pages/userDetails.jsp")
+                           .forward(request, response);
+
+                } else {
+
+                    response.sendRedirect(
+                            request.getContextPath() + "/pages/admin/users?view=notfound"
+                    );
+                }
+
+            } catch (NumberFormatException | SQLException e) {
+
+                e.printStackTrace();
+
+                response.sendRedirect(
+                        request.getContextPath() + "/pages/admin/users?view=error"
+                );
+            }
+        }
     }
 }

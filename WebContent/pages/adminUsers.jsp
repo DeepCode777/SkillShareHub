@@ -25,6 +25,18 @@
 <%
     }
 %>
+<%
+    String viewStatus = request.getParameter("view");
+    if ("notfound".equals(viewStatus)) {
+%>
+    <p>User not found.</p>
+<%
+    } else if ("error".equals(viewStatus)) {
+%>
+    <p>Unable to load user details.</p>
+<%
+    }
+%>
 	<h2>Manage Users</h2>
 
 <table border="1">
@@ -56,15 +68,22 @@
             <td><%= user.getBio() %></td>
             <td><%= user.getProfileImage() %></td>
             <td><%= user.getCreatedAt() %></td>
+            
 			<td>
-			    <form method="post"
-			          action="${pageContext.request.contextPath}/pages/admin/users">
+			    <form method="post" action="${pageContext.request.contextPath}/pages/admin/users">
+
+				    <input type="hidden" name="action" value="view">
+				
+				    <input type="hidden" name="userId" value="<%= user.getUserId() %>">
+				
+				    <button type="submit">View</button>
+
+				</form>
+			    <form method="post" action="${pageContext.request.contextPath}/pages/admin/users">
 			
 			        <input type="hidden" name="action" value="delete">
 			
-			        <input type="hidden"
-			               name="userId"
-			               value="<%= user.getUserId() %>">
+			        <input type="hidden" name="userId" value="<%= user.getUserId() %>">
 			
 			        <button type="submit" onclick="return confirm('Are You sure want to delete this user?');">Delete</button>
 			

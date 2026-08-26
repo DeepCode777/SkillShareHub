@@ -29,6 +29,8 @@ public class UserDAO {
     
     private static final String DELETE_USER_SQL = "DELETE FROM users WHERE user_id = ?";
     
+    private static final String GET_USER_BY_ID_SQL =
+            "SELECT user_id, full_name, email, phone, gender, date_of_birth, city, bio, profile_image, created_at FROM users WHERE user_id = ?";
     // User Login
     public User loginUser(String email) throws SQLException {
 
@@ -112,6 +114,37 @@ public class UserDAO {
         }
 
         return users;
+    }
+    
+    // Get All User By ID For Admin Can See
+    public User getUserById(int userId) throws SQLException {
+
+        try (Connection connection = DBConnection.getConnection(); PreparedStatement statement = connection.prepareStatement(GET_USER_BY_ID_SQL)) {
+
+            statement.setInt(1, userId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+
+                if (resultSet.next()) {
+
+                    User user = new User();
+
+                    user.setUserId(resultSet.getInt("user_id"));
+                    user.setFullName(resultSet.getString("full_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPhone(resultSet.getString("phone"));
+                    user.setGender(resultSet.getString("gender"));
+                    user.setDate_of_birth(resultSet.getDate("date_of_birth"));
+                    user.setCity(resultSet.getString("city"));
+                    user.setBio(resultSet.getString("bio"));
+                    user.setProfileImage(resultSet.getString("profile_image"));
+                    user.setCreatedAt(resultSet.getTimestamp("created_at"));
+
+                    return user;
+                }
+            }
+        }
+        return null;
     }
 
     public boolean insertUser(User user) throws SQLException {
