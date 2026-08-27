@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.skillsharehub.dao.UserDAO;
 import com.skillsharehub.model.User;
+import com.skillsharehub.dao.SkillDAO;
+import com.skillsharehub.model.Skill;
 
 @WebServlet("/pages/admin/users")
 public class AdminUsersServlet extends HttpServlet {
@@ -107,10 +109,14 @@ public class AdminUsersServlet extends HttpServlet {
                 User user = userDAO.getUserById(userId);
 
                 if (user != null) {
+                	
+                	SkillDAO skillDAO = new SkillDAO();
+                	List<Skill> skills = skillDAO.getSkillsByUserId(userId);
 
                     request.setAttribute("user", user);
-                    request.getRequestDispatcher("/pages/userDetails.jsp")
-                           .forward(request, response);
+                    request.setAttribute("skills", skills);
+                    
+                    request.getRequestDispatcher("/pages/userDetails.jsp").forward(request, response);
 
                 } else {
 

@@ -10,6 +10,19 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<%
+    String viewStatus = request.getParameter("view");
+    if ("notfound".equals(viewStatus)) {
+%>
+    <p>User not found.</p>
+<%
+    } else if ("error".equals(viewStatus)) {
+%>
+    <p>Unable to load user details.</p>
+<%
+    }
+%>
 <%
 	List<User> users = (List<User>)request.getAttribute("users");
 %>
@@ -22,18 +35,6 @@
     } else if ("failed".equals(deleteStatus)) {
 %>
     <p>Failed to delete user.</p>
-<%
-    }
-%>
-<%
-    String viewStatus = request.getParameter("view");
-    if ("notfound".equals(viewStatus)) {
-%>
-    <p>User not found.</p>
-<%
-    } else if ("error".equals(viewStatus)) {
-%>
-    <p>Unable to load user details.</p>
 <%
     }
 %>
