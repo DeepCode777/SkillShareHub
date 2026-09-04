@@ -14,6 +14,9 @@ import com.skillsharehub.dao.UserDAO;
 import com.skillsharehub.model.User;
 import com.skillsharehub.dao.SkillDAO;
 import com.skillsharehub.model.Skill;
+import com.skillsharehub.dao.LearningRequestDAO;
+import com.skillsharehub.model.LearningRequest;
+
 
 @WebServlet("/pages/admin/users")
 public class AdminUsersServlet extends HttpServlet {
@@ -111,10 +114,17 @@ public class AdminUsersServlet extends HttpServlet {
                 if (user != null) {
                 	
                 	SkillDAO skillDAO = new SkillDAO();
+                	LearningRequestDAO learningRequestDAO = new LearningRequestDAO();
+                	
                 	List<Skill> skills = skillDAO.getSkillsByUserId(userId);
+                	List<LearningRequest> receivedRequests = learningRequestDAO.getReceivedRequestsByUserId(userId);
+                	List<LearningRequest> sentRequests = learningRequestDAO.getSentRequestsByUserId(userId);
+
 
                     request.setAttribute("user", user);
                     request.setAttribute("skills", skills);
+                    request.setAttribute("receivedRequests", receivedRequests);
+                    request.setAttribute("sentRequests", sentRequests);
                     
                     request.getRequestDispatcher("/pages/userDetails.jsp").forward(request, response);
 

@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.skillsharehub.model.User" %>
 <%@ page import="com.skillsharehub.model.Skill" %>
+<%@ page import="com.skillsharehub.model.LearningRequest" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -26,7 +27,6 @@
 	<p><strong>Created At:</strong> <%= user.getCreatedAt() %></p>
 	<hr>
 	
-	
 <%
     List<Skill> skills = (List<Skill>) request.getAttribute("skills");
 
@@ -46,6 +46,52 @@
     } else {
 %>
     <p>No skills found for this user.</p>
+<%
+    }
+
+    List<LearningRequest> receivedRequests = (List<LearningRequest>) request.getAttribute("receivedRequests");
+    if (receivedRequests != null && !receivedRequests.isEmpty()) {
+        for (LearningRequest requestData : receivedRequests) {
+%>
+
+    <div>
+    	<h2>Learning Requests Received</h2>
+        <p><strong>From:</strong><%= requestData.getSenderName() %></p>
+        <p><strong>Skill:</strong><%= requestData.getSkillName() != null ? requestData.getSkillName() : "Skill no longer available" %></p>
+        <p><strong>Message:</strong><%= requestData.getRequestMessage() %></p>
+        <p><strong>Status:</strong><%= requestData.getRequestStatus() %></p>
+        <p><strong>Date:</strong><%= requestData.getRequestDate() %></p>
+    </div>
+    <hr>
+<%
+        }
+    } else {
+%>
+    <p>No learning requests received.</p>
+<%
+    }
+    
+    
+    List<LearningRequest> sentRequests = (List<LearningRequest>) request.getAttribute("sentRequests");
+    if (sentRequests != null && !sentRequests.isEmpty()) {
+        for (LearningRequest requestData : sentRequests) {
+%>
+    <div>
+    <h2>Learning Requests Sent</h2>
+        <p><strong>To:</strong><%= requestData.getReceiverName() %></p>
+        <p><strong>Skill:</strong><%= requestData.getSkillName() != null ? requestData.getSkillName() : "Skill no longer available" %></p>
+        <p><strong>Message:</strong><%= requestData.getRequestMessage() %></p>
+        <p><strong>Status:</strong><%= requestData.getRequestStatus() %></p>
+        <p><strong>Date:</strong><%= requestData.getRequestDate() %></p>
+    </div>
+
+    <hr>
+
+<%
+        }
+    } else {
+%>
+    <p>No learning requests sent.</p>
 <%
     }
 %>
