@@ -11,6 +11,8 @@
 	
 	<a href="${pageContext.request.contextPath}/pages/admin/users">Manage Users</a>
 	
+	<a href="${pageContext.request.contextPath}/pages/admin/categories">Manage Categories</a>
+	
 	<a href="${pageContext.request.contextPath}/pages/logout">Logout</a>
 </body>
 </html>

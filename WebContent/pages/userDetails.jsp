@@ -2,6 +2,7 @@
 <%@ page import="com.skillsharehub.model.User" %>
 <%@ page import="com.skillsharehub.model.Skill" %>
 <%@ page import="com.skillsharehub.model.LearningRequest" %>
+<%@ page import="com.skillsharehub.model.Category" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -95,6 +96,45 @@
 <%
     }
 %>
+
+ <h1>Manage Categories</h1>
+    <a href="${pageContext.request.contextPath}/pages/admin.jsp">Back to Admin Panel</a>
+    <br><br>
+    <%
+        List<Category> categories = (List<Category>) request.getAttribute("categories");
+    %>
+    <h2>Categories</h2>
+    <%
+        if (categories != null && !categories.isEmpty()) {
+    %>
+        <table border="1" cellpadding="10" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th>Category Icon</th>
+                </tr>
+            </thead>
+            <tbody>
+            <%
+                for (Category category : categories) {
+            %>
+                <tr>
+                    <td><%= category.getCategoryName() %></td>
+                    <td><%= category.getCategoryIcon() %></td>
+                </tr>
+            <%
+                }
+            %>
+            </tbody>
+        </table>
+    <%
+        } else {
+    %>
+        <p>No categories found.</p>
+    <%
+        }
+    %>
+
 	<a href="${pageContext.request.contextPath}/pages/admin/users">Back to Users</a>
 </body>
 </html>
