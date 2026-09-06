@@ -353,8 +353,27 @@ public class AdminCategoryServlet extends HttpServlet {
                         + "/pages/admin/categories?edit=invalid");
             }
         }
+        
+        
+        // Delete Category
+        if ("delete".equals(action)) {
 
-//        // Unknown POST action
-//        response.sendRedirect(request.getContextPath() + "/pages/admin/categories");
+            String categoryIdParameter = request.getParameter("categoryId");
+
+            try {
+                int categoryId = Integer.parseInt(categoryIdParameter);
+                boolean deleted = categoryDAO.deleteCategory(categoryId);
+
+                if (deleted) {
+                    response.sendRedirect(request.getContextPath() + "/pages/admin/categories?delete=success");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/pages/admin/categories?delete=failed");
+                }
+                
+            } catch (NumberFormatException e) {
+                response.sendRedirect(request.getContextPath() + "/pages/admin/categories?delete=invalid");
+            }
+            return;
+        }
     }
 }

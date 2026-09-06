@@ -10,10 +10,6 @@
 <body>
 
     <h1>Manage Categories</h1>
-    <a href="${pageContext.request.contextPath}/pages/admin.jsp">
-        Back to Admin Panel
-    </a>
-    <br><br>
     <%
         List<Category> categories = (List<Category>) request.getAttribute("categories");
     %>
@@ -37,11 +33,23 @@
                     <td><span><img src="${pageContext.request.contextPath}/images/categories/<%= category.getCategoryIcon() %>" width="20" height="20"></span></td>
                     <td><%= category.getCategoryName() %></td>
                     <td>
+                    	<%-- Edit Button --%>
 		    			<form action="${pageContext.request.contextPath}/pages/admin/categories" method="get">
 							<input type="hidden" name="action" value="edit">
 		        			<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
 		        			<button type="submit">Edit</button>
     					</form>
+    					
+    					<%-- Delete Button --%>
+    					<form action="${pageContext.request.contextPath}/pages/admin/categories" method="post" style="display:inline;"
+    						onsubmit="return confirm('Are you sure you want to delete this category? All skills in this category will also be deleted.');">
+						    <input type="hidden" name="action" value="delete">
+						
+						    <input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
+						
+						    <button type="submit">Delete</button>
+						
+						</form>
 					</td>
                 </tr>
             <%
@@ -59,24 +67,24 @@
     
    <h2>Add Category</h2>
 
-<form action="${pageContext.request.contextPath}/pages/admin/categories" method="post" enctype="multipart/form-data" >
+	<form action="${pageContext.request.contextPath}/pages/admin/categories" method="post" enctype="multipart/form-data" >
 
-    <input type="hidden" name="action" value="add">
+	    <input type="hidden" name="action" value="add">
+	
+		<div>
+			<label>Category Name:</label>
+	    	<input type="text" name="categoryName" required>
+		</div>
+	
+	    <div>
+	    	<label>Category Icon:</label>
+	    	<input type="file" name="categoryIcon" accept=".png" required>
+	    </div>
+	    <br><br>
+	
+	    <button type="submit">Add Category</button>
 
-	<div>
-		<label>Category Name:</label>
-    	<input type="text" name="categoryName" required>
-	</div>
-
-    <div>
-    	<label>Category Icon:</label>
-    	<input type="file" name="categoryIcon" accept=".png" required>
-    </div>
-    <br><br>
-
-    <button type="submit">Add Category</button>
-
-</form>
+	</form>
 
 <%
     String addStatus = request.getParameter("add");
@@ -95,7 +103,25 @@
 <%
     }
 %>
-
 <br>
+<%
+    String deleteStatus = request.getParameter("delete");
+    if ("success".equals(deleteStatus)) {
+%>
+    <p>Category deleted successfully.</p>
+<%
+    } else if ("failed".equals(deleteStatus)) {
+%>
+    <p>Failed to delete category.</p>
+<%
+    } else if ("invalid".equals(deleteStatus)) {
+%>
+    <p>Invalid category ID.</p>
+<%
+    }
+%>
+	<a href="${pageContext.request.contextPath}/pages/admin.jsp">
+        Back to Admin Panel
+    </a>
 </body>
 </html>
