@@ -26,6 +26,7 @@
                 <tr>
                     <th>Category Icon</th>
                     <th>Category Name</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,11 +34,15 @@
                 for (Category category : categories) {
             %>
                 <tr>
-                    <td><span><img src="${pageContext.request.contextPath}/images/categories/<%= category.getCategoryIcon() %>"
-         							width="20"
-         							height="20"></span>
-         			</td>
+                    <td><span><img src="${pageContext.request.contextPath}/images/categories/<%= category.getCategoryIcon() %>" width="20" height="20"></span></td>
                     <td><%= category.getCategoryName() %></td>
+                    <td>
+		    			<form action="${pageContext.request.contextPath}/pages/admin/categories" method="get">
+							<input type="hidden" name="action" value="edit">
+		        			<input type="hidden" name="categoryId" value="<%= category.getCategoryId() %>">
+		        			<button type="submit">Edit</button>
+    					</form>
+					</td>
                 </tr>
             <%
                 }
@@ -65,7 +70,7 @@
 
     <div>
     	<label>Category Icon:</label>
-    	<input type="file" name="categoryIcon" accept=".png,.jpg,.jpeg" required>
+    	<input type="file" name="categoryIcon" accept=".png" required>
     </div>
     <br><br>
 
