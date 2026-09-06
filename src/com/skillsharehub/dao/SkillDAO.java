@@ -10,12 +10,22 @@ import com.skillsharehub.model.Skill;
 import com.skillsharehub.util.DBConnection;
 
 public class SkillDAO {
-	private static final String GET_ALL_SKILLS_SQL = "SELECT skill_id, user_id, category_id, skill_name, skill_details, available_mode "
-			+ "FROM skills";
+	private static final String GET_ALL_SKILLS_SQL =
+	        "SELECT s.skill_id, s.user_id, s.category_id, s.skill_name, s.skill_details, s.available_mode, c.category_name, u.full_name AS user_name FROM skills s " +
+	        "JOIN categories c ON s.category_id = c.category_id JOIN users u ON s.user_id = u.user_id";
+	
+	/*private static final String GET_SKILL_BY_ID_SQL =
+	        "SELECT skill_id, user_id, category_id, skill_name, skill_details, available_mode "
+	        + "FROM skills WHERE skill_id = ?";*/
 	
 	private static final String GET_SKILL_BY_ID_SQL =
-	        "SELECT skill_id, user_id, category_id, skill_name, skill_details, available_mode "
-	        + "FROM skills WHERE skill_id = ?";
+	        "SELECT s.skill_id, s.user_id, s.category_id, s.skill_name, s.skill_details, s.available_mode, c.category_name, u.full_name AS user_name FROM skills s " +
+	        "JOIN categories c ON s.category_id = c.category_id JOIN users u ON s.user_id = u.user_id WHERE s.skill_id = ?";
+	
+	private static final String INSERT_SKILL_SQL ="INSERT INTO skills (user_id, category_id, skill_name, skill_details, available_mode)VALUES (?, ?, ?, ?, ?)";
+	
+	private static final String UPDATE_SKILL_SQL = "UPDATE skills SET category_id = ?, skill_name = ?, skill_details = ?, available_mode = ? " +
+	        "WHERE skill_id = ?";
 	
 	private static final String DELETE_SKILL_SQL = "DELETE FROM skills WHERE skill_id = ?";
 	
@@ -25,6 +35,7 @@ public class SkillDAO {
 	        + "JOIN categories c ON s.category_id = c.category_id "
 	        + "WHERE s.user_id = ?";
 	
+	// Get All Skills
 	public List<Skill> getAllSkills() throws SQLException {
 
 	    List<Skill> skills = new ArrayList<>();
@@ -43,6 +54,8 @@ public class SkillDAO {
 	            skill.setSkillName(resultSet.getString("skill_name"));
 	            skill.setSkillDetails(resultSet.getString("skill_details"));
 	            skill.setAvailableMode(resultSet.getString("available_mode"));
+	            skill.setCategoryName(resultSet.getString("category_name"));
+	            skill.setUserName(resultSet.getString("user_name"));
 
 	            skills.add(skill);
 	        }
@@ -71,12 +84,52 @@ public class SkillDAO {
 	                skill.setSkillName(resultSet.getString("skill_name"));
 	                skill.setSkillDetails(resultSet.getString("skill_details"));
 	                skill.setAvailableMode(resultSet.getString("available_mode"));
+	                skill.setCategoryName(resultSet.getString("category_name"));
+	                skill.setUserName(resultSet.getString("user_name"));
 
 	                return skill;
 	            }
 	        }
 	    }
 	    return null;
+	}
+	
+	// Add Skills
+	public boolean addSkill(Skill skill) {
+	    boolean rowInserted = false;
+	    try (Connection connection = DBConnection.getConnection();PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SKILL_SQL)) {
+
+	        preparedStatement.setInt(1, skill.getUserId());
+	        preparedStatement.setInt(2, skill.getCategoryId());
+	        preparedStatement.setString(3, skill.getSkillName());
+	        preparedStatement.setString(4, skill.getSkillDetails());
+	        preparedStatement.setString(5, skill.getAvailableMode());
+
+	        rowInserted = preparedStatement.executeUpdate() > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return rowInserted;
+	}
+	
+	// Update Skill
+	public boolean updateSkill(Skill skill) {
+	    boolean rowUpdated = false;
+
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SKILL_SQL)) {
+
+	        preparedStatement.setInt(1, skill.getCategoryId());
+	        preparedStatement.setString(2, skill.getSkillName());
+	        preparedStatement.setString(3, skill.getSkillDetails());
+	        preparedStatement.setString(4, skill.getAvailableMode());
+	        preparedStatement.setInt(5, skill.getSkillId());
+
+	        rowUpdated = preparedStatement.executeUpdate() > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return rowUpdated;
 	}
 	
 	// Get Skills By User ID

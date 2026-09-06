@@ -8,6 +8,7 @@ public class Skill {
 	private String skillDetails;
 	private String availableMode;
 	private String categoryName;
+	private String userName;
 	
 	public Skill() {
 		
@@ -18,12 +19,10 @@ public class Skill {
 	public String toString() {
 		return "Skill [skillId=" + skillId + ", userId=" + userId + ", categoryId=" + categoryId + ", skillName="
 				+ skillName + ", skillDetails=" + skillDetails + ", availableMode=" + availableMode + ", categoryName="
-				+ categoryName + "]";
+				+ categoryName + ", userName=" + userName + "]";
 	}
 
-
-
-	public Skill(int skillId, int userId, int categoryId, String skillName, String skillDetails, String availableMode, String categoryName) {
+	public Skill(int skillId, int userId, int categoryId, String skillName, String skillDetails, String availableMode, String categoryName, String userName) {
 		super();
 		this.skillId = skillId;
 		this.userId = userId;
@@ -33,8 +32,8 @@ public class Skill {
 		this.availableMode = availableMode;
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
+		this.userName = userName;
 	}
-	
 	
 	
 	public String getCategoryName() {
@@ -81,7 +80,11 @@ public class Skill {
 	public void setAvailableMode(String availableMode) {
 		this.availableMode = availableMode;
 	}
-	
-	
+	public String getUserName() {
+	    return userName;
+	}
+	public void setUserName(String userName) {
+	    this.userName = userName;
+	}
 	
 }
