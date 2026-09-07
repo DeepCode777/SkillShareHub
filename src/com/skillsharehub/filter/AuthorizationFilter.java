@@ -44,6 +44,6 @@ public class AuthorizationFilter implements Filter {
 	
 	private boolean isAdminResource(String resource) {
 
-	    return resource.equals("/pages/admin.jsp") || resource.equals("/pages/admin/users") || resource.equals("/pages/admin/categories");
+	    return resource.equals("/pages/admin.jsp") || resource.equals("/pages/admin/users") || resource.equals("/pages/admin/categories") || resource.equals("/pages/admin/skills");
 	}
 }
