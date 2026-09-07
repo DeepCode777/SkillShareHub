@@ -52,6 +52,31 @@ public class AdminSkillServlet extends HttpServlet {
 		        return;
 		    }
 			
+			if ("edit".equals(action)) {
+
+			    String skillIdParameter = request.getParameter("skillId");
+
+			    try {
+			        int skillId = Integer.parseInt(skillIdParameter);
+			        Skill skill = skillDAO.getSkillById(skillId);
+
+			        if (skill == null) {
+			            response.sendRedirect(request.getContextPath() + "/pages/admin/skills?edit=notfound");
+			            return;
+			        }
+
+			        List<Category> categories = categoryDAO.getAllCategories();
+			        request.setAttribute("skill", skill);
+			        request.setAttribute("categories", categories);
+
+			        request.getRequestDispatcher("/pages/adminSkillEdit.jsp").forward(request, response);
+			        return;
+			    } catch (NumberFormatException e) {
+			        response.sendRedirect(request.getContextPath() + "/pages/admin/skills?edit=invalid");
+			        return;
+			    }
+			}
+			
 			List<Skill> skills = skillDAO.getAllSkills();
 			
 			request.setAttribute("skills", skills);
@@ -93,5 +118,41 @@ public class AdminSkillServlet extends HttpServlet {
             }
             return;
         }
+        
+        //
+        try {
+	        if ("update".equals(action)) {
+	
+	            int skillId = Integer.parseInt(request.getParameter("skillId"));
+	            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+	
+	            String skillName = request.getParameter("skillName");
+	            String skillDetails = request.getParameter("skillDetails");
+	            String availableMode = request.getParameter("availableMode");
+	
+	            Skill skill = skillDAO.getSkillById(skillId);
+	
+	            if (skill == null) {
+	                response.sendRedirect(request.getContextPath() + "/pages/admin/skills?edit=notfound");
+	                return;
+	            }
+	
+	            skill.setCategoryId(categoryId);
+	            skill.setSkillName(skillName);
+	            skill.setSkillDetails(skillDetails);
+	            skill.setAvailableMode(availableMode);
+	
+	            boolean result = skillDAO.updateSkill(skill);
+	
+	            if (result) {
+	                response.sendRedirect(request.getContextPath() + "/pages/admin/skills?edit=success");
+	            } else {
+	                response.sendRedirect(request.getContextPath() + "/pages/admin/skills?edit=failed");
+	            }
+	            return;
+	        }
+	    } catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
 }
