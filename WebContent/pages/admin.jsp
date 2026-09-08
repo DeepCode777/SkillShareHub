@@ -13,6 +13,8 @@
 	
 	<a href="${pageContext.request.contextPath}/pages/admin/categories">Manage Categories</a>
 	
+	<a href="<%= request.getContextPath() %>/pages/admin/skills">Manage Skills</a>
+	
 	<a href="${pageContext.request.contextPath}/pages/logout">Logout</a>
 </body>
 </html>

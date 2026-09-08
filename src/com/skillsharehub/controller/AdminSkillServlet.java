@@ -119,7 +119,7 @@ public class AdminSkillServlet extends HttpServlet {
             return;
         }
         
-        //
+        // Update Skill Button
         try {
 	        if ("update".equals(action)) {
 	
@@ -149,6 +149,21 @@ public class AdminSkillServlet extends HttpServlet {
 	            } else {
 	                response.sendRedirect(request.getContextPath() + "/pages/admin/skills?edit=failed");
 	            }
+	            return;
+	        }
+	        
+	        // Delete Skill Button
+	        if ("delete".equals(action)) {
+
+	            int skillId = Integer.parseInt(request.getParameter("skillId"));
+	            boolean result = skillDAO.deleteSkill(skillId);
+
+	            if (result) {
+	                response.sendRedirect(request.getContextPath() + "/pages/admin/skills?delete=success");
+	            } else {
+	                response.sendRedirect(request.getContextPath() + "/pages/admin/skills?delete=failed");
+	            }
+
 	            return;
 	        }
 	    } catch (SQLException e) {
