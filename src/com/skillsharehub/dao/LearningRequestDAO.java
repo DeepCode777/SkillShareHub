@@ -26,6 +26,14 @@ public class LearningRequestDAO {
 	        + "LEFT JOIN skills s ON lr.skill_id = s.skill_id "
 	        + "WHERE lr.sender_user_id = ?";
 	
+	// Insert LR 
+	private static final String INSERT_LEARNING_REQUEST_SQL =
+	        "INSERT INTO learning_requests (sender_user_id, receiver_user_id, skill_id, message, status, request_date) VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+	
+	// Pending Request Check by User or Skill ID
+	private static final String CHECK_PENDING_REQUEST_SQL = "SELECT request_id FROM learning_requests WHERE sender_user_id = ? AND skill_id = ? AND status = 'Pending'";
+	
+	
 	public List<LearningRequest> getReceivedRequestsByUserId(int userId) throws SQLException {
 
 	    List<LearningRequest> requests = new ArrayList<>();
@@ -108,5 +116,52 @@ public class LearningRequestDAO {
 	    }
 
 	    return requests;
+	}
+	
+	// Create LR
+	public boolean createLearningRequest(LearningRequest request) throws SQLException {
+
+	    boolean rowInserted = false;
+
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(INSERT_LEARNING_REQUEST_SQL)) {
+
+	        statement.setInt(1, request.getSenderUserId());
+	        statement.setInt(2, request.getReceiverUserId());
+
+	        if (request.getSkillId() == null) {
+	            statement.setNull(3, java.sql.Types.INTEGER);
+	        } else {
+	            statement.setInt(3, request.getSkillId());
+	        }
+
+	        statement.setString(4, request.getRequestMessage());
+	        statement.setString(5, request.getRequestStatus());
+
+	        rowInserted = statement.executeUpdate() > 0;
+	    }
+
+	    return rowInserted;
+	}
+	
+	// has Pending Request Check by User or Skill ID
+	public boolean hasPendingRequest(int senderUserId, int skillId) throws SQLException {
+
+	    boolean exists = false;
+
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(CHECK_PENDING_REQUEST_SQL)) {
+
+	        statement.setInt(1, senderUserId);
+	        statement.setInt(2, skillId);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+
+	            if (resultSet.next()) {
+	                exists = true;
+	            }
+	        }
+	    }
+	    return exists;
 	}
 }
