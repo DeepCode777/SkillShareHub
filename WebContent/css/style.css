@@ -1,0 +1,377 @@
+/* Skill Share Hub - Common Styles */
+
+html{
+	height: 100%;
+}
+
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+a {
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+/* Skill Share Hub - Color System */
+
+:root {
+    --primary-color: #0d6efd;
+    --text-color: #212529;
+    --background-color: #f8f9fa;
+    --white-color: #ffffff;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+}
+
+/* Common Container */
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/*Common Button*/
+
+.btn-primary {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* Common Card */
+
+.card {
+    background-color: var(--white-color);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Common Form */
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: var(--white-color);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Common Alert */
+
+.alert {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.alert-success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.alert-info {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+/* Common Table */
+   
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--white-color);
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    border: 1px solid #dee2e6;
+    text-align: left;
+}
+
+.table th {
+    background-color: var(--background-color);
+    font-weight: 600;
+}
+
+/* Status Badges */
+   
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.badge-success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.badge-danger {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+.badge-warning {
+    background-color: #fff3cd;
+    color: #664d03;
+}
+
+.badge-info {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+/* Page spacing */
+   
+.page {
+    padding: 30px 0;
+}
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+
+    .container {
+        width: 95%;
+    }
+
+    .navbar {
+        padding: 12px 0;
+    }
+
+    .navbar-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .navbar-brand {
+        font-size: 20px;
+    }
+
+    .navbar-links {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 15px;
+    }
+
+    .navbar-links a {
+        font-size: 14px;
+    }
+
+    .page {
+        padding: 30px 0;
+    }
+
+    .page-title {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .login-card {
+        padding: 18px;
+    }
+
+    .form-control {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .btn-primary {
+        width: 100%;
+    }
+
+    .register-link {
+        line-height: 1.6;
+    }
+
+    .footer {
+        padding: 20px 0;
+    }
+}
+
+/* Navbar */
+
+.navbar {
+    background-color: var(--white-color);
+    border-bottom: 1px solid #dee2e6;
+    padding: 15px 0;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.navbar-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.navbar-links a {
+    color: var(--text-color);
+    font-size: 15px;
+}
+
+.navbar-links a:hover {
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .navbar-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+}
+/* Footer */
+
+.footer {
+    background-color: var(--white-color);
+    border-top: 1px solid #dee2e6;
+    padding: 25px 0;
+    margin-top: 40px;
+}
+
+.footer p {
+    margin-bottom: 5px;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+/* Login Page */
+
+.login-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.login-card {
+    width: 100%;
+}
+
+.login-card .btn-primary {
+    width: 100%;
+    margin-top: 5px;
+}
+
+/* Register Link */
+
+.register-link {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.register-link a {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
