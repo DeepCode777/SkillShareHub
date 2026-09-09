@@ -95,8 +95,9 @@
 <%
     }
 %>
+    	<a href="${pageContext.request.contextPath}/pages/admin/skills?action=add">Add Skill</a>
     <p>
-        <a href="<%= request.getContextPath() %>/pages/admin.jsp">Back to Admin Dashboard</a>
+        <a href="<%= request.getContextPath() %>/pages/admin.jsp">Back to Admin Panel</a>
     </p>
 </body>
 </html>

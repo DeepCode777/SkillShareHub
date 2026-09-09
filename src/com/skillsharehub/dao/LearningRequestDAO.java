@@ -164,4 +164,15 @@ public class LearningRequestDAO {
 	    }
 	    return exists;
 	}
+	
+	// Check Same Pending
+	public String validateLearningRequest(int senderUserId, int skillId) throws SQLException {
+
+	    if (hasPendingRequest(senderUserId, skillId)) {
+	        return "DUPLICATE_PENDING";
+	    }
+
+	    return "VALID";
+	}
+	
 }
