@@ -19,7 +19,7 @@
 
     <p>
         <a href="<%= request.getContextPath() %>/pages/admin/skills">
-            Back to Manage Skills
+            Cancel
         </a>
     </p>
 

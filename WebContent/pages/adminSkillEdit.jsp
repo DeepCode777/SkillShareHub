@@ -16,7 +16,7 @@
 <body>
     <h1>Edit Skill</h1>
     <p>
-        <a href="<%= request.getContextPath() %>/pages/admin/skills">Back to Manage Skills</a>
+        <a href="<%= request.getContextPath() %>/pages/admin/skills">Cancel</a>
     </p>
 
     <hr>

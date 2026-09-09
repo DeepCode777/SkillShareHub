@@ -176,4 +176,23 @@ public class SkillDAO {
 	        return rowsAffected == 1;
 	    }
 	}
+	
+	// Section Use For LR
+	public boolean isSkillOwnedByUser(int skillId, int userId) throws SQLException {
+
+	    String sql = "SELECT skill_id FROM skills WHERE skill_id = ? AND user_id = ?";
+
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+
+	        statement.setInt(1, skillId);
+	        statement.setInt(2, userId);
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+
+	            return resultSet.next();
+	        }
+	    }
+	}
+	
 }
