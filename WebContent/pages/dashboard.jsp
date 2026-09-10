@@ -26,6 +26,9 @@
 
 <p>User ID: <%= user.getUserId() %></p>
 
+<a href="${pageContext.request.contextPath}/pages/skills">Skills</a>
+<a href="${pageContext.request.contextPath}/pages/requests">Learning Requests</a>
+
 <a href="logout">Log Out</a>
 
 </body>

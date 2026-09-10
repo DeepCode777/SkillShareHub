@@ -32,8 +32,6 @@ public class SkillServlet extends HttpServlet {
 
             List<Skill> skills = skillDAO.getAllSkills();
             // LR Column ID
-            System.out.println("Skills loaded : " + skills.size());
-            
             request.setAttribute("skills", skills);
             request.getRequestDispatcher("/pages/skills.jsp").forward(request, response);
 

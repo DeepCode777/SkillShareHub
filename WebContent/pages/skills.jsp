@@ -60,5 +60,8 @@
             }
         }
     %>
+    <br>
+
+<a href="${pageContext.request.contextPath}/pages/dashboard.jsp">Back to Home</a>
 </body>
 </html>
