@@ -10,6 +10,41 @@
 </head>
 <body>
     <h1>Learning Requests</h1>
+	    
+	<%
+	    String requestMessage = request.getParameter("request");
+	
+	    if ("updated".equals(requestMessage)) {
+	%>
+	    <p style="color: green;">Learning request updated successfully.</p>
+	<%
+	    } else if ("success".equals(requestMessage)) {
+	%>
+	    <p style="color: green;">Learning request sent successfully.</p>
+	<%
+	    } else if ("failed".equals(requestMessage)) {
+	%>
+	    <p style="color: red;">Unable to process the learning request.</p>
+	<%
+	    } else if ("invalid".equals(requestMessage)) {
+	%>
+	    <p style="color: red;">Invalid learning request.</p>
+	<%
+	    } else if ("self".equals(requestMessage)) {
+	%>
+	    <p style="color: red;">You cannot send a learning request to your own skill.</p>
+	<%
+	    } else if ("duplicate".equals(requestMessage)) {
+	%>
+	    <p style="color: red;">A pending request already exists for this skill.</p>
+	<%
+	    } else if ("notfound".equals(requestMessage)) {
+	%>
+	    <p style="color: red;">Skill not found.</p>
+	<%
+	    }
+	%>
+    
     <h2>Received Requests</h2>
     <%
         List<LearningRequest> receivedRequests = (List<LearningRequest>) request.getAttribute("receivedRequests");
@@ -57,6 +92,49 @@
                 <strong>Date:</strong>
                 <%= requestItem.getRequestDate() %>
             </p>
+            
+            <%
+    			if ("Pending".equals(requestItem.getRequestStatus())) {
+			%>
+		
+		    <!-- Accept -->
+		    <form action="${pageContext.request.contextPath}/pages/learning-request-status"
+		          method="post" style="display:inline;">
+		        <input type="hidden" name="requestId" value="<%= requestItem.getRequestId() %>">
+		        <input type="hidden" name="action" value="accept">
+		        <button type="submit">Accept</button>
+		    </form>
+		
+		    <!-- Reject -->
+		    <form action="${pageContext.request.contextPath}/pages/learning-request-status"
+		          method="post" style="display:inline;">
+		        <input type="hidden" name="requestId" value="<%= requestItem.getRequestId() %>">
+		        <input type="hidden" name="action" value="reject">
+		        <button type="submit">Reject</button>
+		    </form>
+		
+		    <!-- Cancel -->
+		    <form action="${pageContext.request.contextPath}/pages/learning-request-status"
+		          method="post" style="display:inline;">
+		        <input type="hidden" name="requestId" value="<%= requestItem.getRequestId() %>">
+		        <input type="hidden" name="action" value="cancel">
+		        <button type="submit">Cancel</button>
+		
+		    </form>
+			<%
+			    } else if ("Accepted".equals(requestItem.getRequestStatus())) {
+			%>
+			
+		    <!-- Complete -->
+		    <form action="${pageContext.request.contextPath}/pages/learning-request-status" method="post">
+		        <input type="hidden" name="requestId" value="<%= requestItem.getRequestId() %>">
+		        <input type="hidden" name="action" value="complete">
+		
+		        <button type="submit">Complete</button>
+		    </form>
+			<%
+			    }
+			%>
         </div>
             <hr>
     <%
@@ -112,6 +190,20 @@
             <strong>Date:</strong>
             <%= requestItem.getRequestDate() %>
         </p>
+        
+        <%
+		    if ("Pending".equals(requestItem.getRequestStatus())) {
+		%>
+	    <!-- Cancel -->
+	    <form action="${pageContext.request.contextPath}/pages/learning-request-status" method="post">
+	        <input type="hidden" name="requestId" value="<%= requestItem.getRequestId() %>">
+	        <input type="hidden" name="action" value="cancel">
+	        <button type="submit">Cancel</button>
+	    </form>
+		<%
+		    }
+		%>
+        
 	</div>
         <hr>
 	<%

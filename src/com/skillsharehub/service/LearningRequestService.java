@@ -51,4 +51,43 @@ public class LearningRequestService {
 
         return "FAILED";
     }
+    
+    //
+    public String updateRequestStatus(int requestId, int receiverUserId, String newStatus) throws Exception {
+
+        // Validate new status
+        if (!"Accepted".equals(newStatus) && !"Rejected".equals(newStatus)) {
+            return "INVALID_STATUS";
+        }
+
+        // Update request status
+        boolean updated = learningRequestDAO.updateRequestStatus(requestId, receiverUserId, newStatus);
+
+        if (updated) {
+            return "SUCCESS";
+        }
+
+        return "UPDATE_FAILED";
+    }
+    
+    //
+    public String cancelLearningRequest(int requestId, int userId) throws Exception {
+
+        boolean cancelled = learningRequestDAO.cancelLearningRequest(requestId,userId);
+        if (cancelled) {
+            return "SUCCESS";
+        }
+
+        return "CANCEL_FAILED";
+    }
+    
+    //
+    public String completeLearningRequest(int requestId, int receiverUserId) throws Exception {
+
+        boolean completed = learningRequestDAO.completeLearningRequest(requestId, receiverUserId);
+        if (completed) {
+            return "SUCCESS";
+        }
+        return "COMPLETE_FAILED";
+    }
 }

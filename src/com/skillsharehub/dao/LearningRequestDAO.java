@@ -33,6 +33,17 @@ public class LearningRequestDAO {
 	// Pending Request Check by User or Skill ID
 	private static final String CHECK_PENDING_REQUEST_SQL = "SELECT request_id FROM learning_requests WHERE sender_user_id = ? AND skill_id = ? AND status = 'Pending'";
 	
+	// Update Pending Request Status by Receiver
+	private static final String UPDATE_REQUEST_STATUS_SQL = "UPDATE learning_requests SET status = ? WHERE request_id = ? AND receiver_user_id = ? AND status = 'Pending'";
+	
+	// Cancel Pending Learning Request by Sender or Receiver
+	private static final String CANCEL_LEARNING_REQUEST_SQL = "UPDATE learning_requests SET status = 'Cancel' "
+			+ "WHERE request_id = ? AND (sender_user_id = ? OR receiver_user_id = ?) AND status = 'Pending'";
+	
+	// Complete Accepted Learning Request by Receiver
+	private static final String COMPLETE_LEARNING_REQUEST_SQL = "UPDATE learning_requests SET status = 'Completed' "
+			+ "WHERE request_id = ? AND receiver_user_id = ? AND status = 'Accepted'";
+	
 	
 	public List<LearningRequest> getReceivedRequestsByUserId(int userId) throws SQLException {
 
@@ -173,6 +184,51 @@ public class LearningRequestDAO {
 	    }
 
 	    return "VALID";
+	}
+	
+	// Update Learning Request Status
+	public boolean updateRequestStatus(int requestId, int receiverUserId, String newStatus) throws SQLException {
+	    boolean updated = false;
+
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(UPDATE_REQUEST_STATUS_SQL)) {
+
+	        statement.setString(1, newStatus);
+	        statement.setInt(2, requestId);
+	        statement.setInt(3, receiverUserId);
+
+	        updated = statement.executeUpdate() > 0;
+	    }
+	    return updated;
+	}
+	
+	// Cancel Pending Learning Request
+	public boolean cancelLearningRequest(int requestId, int userId) throws SQLException {
+
+	    boolean cancelled = false;
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(CANCEL_LEARNING_REQUEST_SQL)) {
+
+	        statement.setInt(1, requestId);
+	        statement.setInt(2, userId);
+	        statement.setInt(3, userId);
+	        cancelled = statement.executeUpdate() > 0;
+	    }
+	    return cancelled;
+	}
+	
+	// Complete Accepted Learning Request
+	public boolean completeLearningRequest(int requestId, int receiverUserId) throws SQLException {
+
+	    boolean completed = false;
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(COMPLETE_LEARNING_REQUEST_SQL)) {
+
+	        statement.setInt(1, requestId);
+	        statement.setInt(2, receiverUserId);
+	        completed = statement.executeUpdate() > 0;
+	    }
+	    return completed;
 	}
 	
 }
