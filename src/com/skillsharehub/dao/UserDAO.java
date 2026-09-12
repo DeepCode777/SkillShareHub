@@ -31,6 +31,10 @@ public class UserDAO {
     
     private static final String GET_USER_BY_ID_SQL =
             "SELECT user_id, full_name, email, phone, gender, date_of_birth, city, bio, profile_image, created_at FROM users WHERE user_id = ?";
+    
+    private static final String UPDATE_USER_PROFILE_SQL = "UPDATE users SET full_name = ?, phone = ?, gender = ?, date_of_birth = ?, city = ?, bio = ?, profile_image = ? WHERE user_id = ?";
+    
+    
     // User Login
     public User loginUser(String email) throws SQLException {
 
@@ -174,6 +178,27 @@ public class UserDAO {
              PreparedStatement statement = connection.prepareStatement(DELETE_USER_SQL)) {
 
             statement.setInt(1, userId);
+
+            int rowsAffected = statement.executeUpdate();
+
+            return rowsAffected == 1;
+        }
+    }
+    
+    // Edit User Profile By User
+    public boolean updateUserProfile(User user) throws SQLException {
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_PROFILE_SQL)) {
+
+            statement.setString(1, user.getFullName());
+            statement.setString(2, user.getPhone());
+            statement.setString(3, user.getGender());
+            statement.setDate(4, user.getDate_of_birth());
+            statement.setString(5, user.getCity());
+            statement.setString(6, user.getBio());
+            statement.setString(7, user.getProfileImage());
+            statement.setInt(8, user.getUserId());
 
             int rowsAffected = statement.executeUpdate();
 
