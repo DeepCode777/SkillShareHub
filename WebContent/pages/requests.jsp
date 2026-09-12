@@ -107,15 +107,17 @@
 		
 		    <!-- Reject -->
 		    <form action="${pageContext.request.contextPath}/pages/learning-request-status"
-		          method="post" style="display:inline;">
+		          	method="post" style="display:inline;"
+		          	onsubmit="return confirm('Reject this learning request?');">
 		        <input type="hidden" name="requestId" value="<%= requestItem.getRequestId() %>">
 		        <input type="hidden" name="action" value="reject">
 		        <button type="submit">Reject</button>
 		    </form>
 		
 		    <!-- Cancel -->
-		    <form action="${pageContext.request.contextPath}/pages/learning-request-status"
-		          method="post" style="display:inline;">
+		    <form action="${pageContext.request.contextPath}/pages/learning-request-status" 
+		    		method="post" style="display:inline;" 
+		    		onsubmit="return confirm('Cancel this learning request?');">
 		        <input type="hidden" name="requestId" value="<%= requestItem.getRequestId() %>">
 		        <input type="hidden" name="action" value="cancel">
 		        <button type="submit">Cancel</button>
@@ -126,10 +128,10 @@
 			%>
 			
 		    <!-- Complete -->
-		    <form action="${pageContext.request.contextPath}/pages/learning-request-status" method="post">
+		    <form action="${pageContext.request.contextPath}/pages/learning-request-status" method="post"
+      				onsubmit="return confirm('Mark this learning request as completed?');">
 		        <input type="hidden" name="requestId" value="<%= requestItem.getRequestId() %>">
 		        <input type="hidden" name="action" value="complete">
-		
 		        <button type="submit">Complete</button>
 		    </form>
 			<%
@@ -173,7 +175,6 @@
             <%
                 }
             %>
-
         </p>
 
         <p>
@@ -203,14 +204,12 @@
 		<%
 		    }
 		%>
-        
 	</div>
         <hr>
 	<%
         	}
     	}
 	%>
-	
 	<br>
 
 <a href="${pageContext.request.contextPath}/pages/dashboard.jsp">Back to Home</a>

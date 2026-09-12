@@ -27,7 +27,12 @@ public class SkillDAO {
 	private static final String UPDATE_SKILL_SQL = "UPDATE skills SET category_id = ?, skill_name = ?, skill_details = ?, available_mode = ? " +
 	        "WHERE skill_id = ?";
 	
+	private static final String UPDATE_SKILL_BY_USER_SQL = "UPDATE skills SET category_id = ?, skill_name = ?, skill_details = ?, available_mode = ? "
+	        + "WHERE skill_id = ? AND user_id = ?";
+	
 	private static final String DELETE_SKILL_SQL = "DELETE FROM skills WHERE skill_id = ?";
+	
+	private static final String DELETE_SKILL_BY_USER_SQL = "DELETE FROM skills WHERE skill_id = ? AND user_id = ?";
 	
 	private static final String GET_SKILLS_BY_USER_ID_SQL =
 	        "SELECT s.skill_id, s.user_id, s.category_id, s.skill_name, s.skill_details, s.available_mode, c.category_name "
@@ -132,6 +137,26 @@ public class SkillDAO {
 	    return rowUpdated;
 	}
 	
+	// Update Skill By User - MySkillEdit
+	public boolean updateSkillByUser(Skill skill, int userId) throws SQLException {
+	    boolean rowUpdated = false;
+
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SKILL_BY_USER_SQL)) {
+
+	        preparedStatement.setInt(1, skill.getCategoryId());
+	        preparedStatement.setString(2, skill.getSkillName());
+	        preparedStatement.setString(3, skill.getSkillDetails());
+	        preparedStatement.setString(4, skill.getAvailableMode());
+	        preparedStatement.setInt(5, skill.getSkillId());
+	        preparedStatement.setInt(6, userId);
+
+	        rowUpdated = preparedStatement.executeUpdate() > 0;
+
+	    }
+	    return rowUpdated;
+	}
+	
 	// Get Skills By User ID
 	public List<Skill> getSkillsByUserId(int userId) throws SQLException {
 
@@ -170,6 +195,21 @@ public class SkillDAO {
 	         PreparedStatement statement = connection.prepareStatement(DELETE_SKILL_SQL)) {
 
 	        statement.setInt(1, skillId);
+
+	        int rowsAffected = statement.executeUpdate();
+
+	        return rowsAffected == 1;
+	    }
+	}
+	
+	// Delete Skill By User - MySkillDelete
+	public boolean deleteSkillByUser(int skillId, int userId) throws SQLException {
+
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(DELETE_SKILL_BY_USER_SQL)) {
+
+	        statement.setInt(1, skillId);
+	        statement.setInt(2, userId);
 
 	        int rowsAffected = statement.executeUpdate();
 

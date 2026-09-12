@@ -48,6 +48,11 @@ public class LearningRequestStatusServlet extends HttpServlet {
 
             int requestId = Integer.parseInt(requestIdParameter);
 
+            if (requestId <= 0) {
+                response.sendRedirect(request.getContextPath() + "/pages/requests?request=invalid");
+                return;
+            }
+
             // Get action
             String action = request.getParameter("action");
 
@@ -55,6 +60,8 @@ public class LearningRequestStatusServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/pages/requests?request=invalid");
                 return;
             }
+            
+            action = action.trim().toLowerCase();
 
             // Logged-in user's ID
             int userId = loggedInUser.getUserId();

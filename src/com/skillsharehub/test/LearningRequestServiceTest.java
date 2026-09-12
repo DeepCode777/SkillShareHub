@@ -111,9 +111,9 @@ public class LearningRequestServiceTest {
 //        	Already cancel -> Cancel = CANCEL_FAILED
         	
         	
-        	// Test 1: Complet request - RequestID, RequesteduserID
-        	String result2 = service.completeLearningRequest(10, 25);
-        	System.out.println("Test 1 - Cancelled Request: " + result2);
+ //       	// Test 1: Completed request - RequestID, RequesteduserID
+ //       	String result2 = service.completeLearningRequest(10, 25);
+ //       	System.out.println("Test 1 - Cancelled Request: " + result2);
 
 //        	Receiver + Accepted -> Completed = SUCCESS
 //        	Sender + Accepted -> Completed = COMPLETE_FAILED
