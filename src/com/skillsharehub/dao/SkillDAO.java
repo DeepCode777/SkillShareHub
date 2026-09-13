@@ -234,5 +234,71 @@ public class SkillDAO {
 	        }
 	    }
 	}
-	
+
+	// Search Skills
+	public List<Skill> searchSkills(String skillName, int categoryId, String availableMode) throws SQLException {
+
+	    List<Skill> skills = new ArrayList<>();
+
+	    StringBuilder sql = new StringBuilder(
+	            "SELECT s.skill_id, s.user_id, s.category_id, "
+	            + "s.skill_name, s.skill_details, s.available_mode, "
+	            + "c.category_name, u.full_name AS user_name "
+	            + "FROM skills s "
+	            + "JOIN categories c ON s.category_id = c.category_id "
+	            + "JOIN users u ON s.user_id = u.user_id "
+	            + "WHERE 1=1"
+	    );
+
+	    List<Object> parameters = new ArrayList<>();
+
+	    // Skill Name filter
+	    if (skillName != null && !skillName.trim().isEmpty()) {
+	        sql.append(" AND LOWER(s.skill_name) LIKE LOWER(?)");
+	        parameters.add("%" + skillName.trim() + "%");
+	    }
+
+	    // Category filter
+	    // 0 = All Categories
+	    if (categoryId != 0) {
+	        sql.append(" AND s.category_id = ?");
+	        parameters.add(categoryId);
+	    }
+
+	    // Available Mode filter
+	    // Empty string = All Modes
+	    if (availableMode != null && !availableMode.trim().isEmpty()) {
+	        sql.append(" AND s.available_mode = ?");
+	        parameters.add(availableMode.trim());
+	    }
+
+	    try (Connection connection = DBConnection.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql.toString())) {
+
+	        for (int i = 0; i < parameters.size(); i++) {
+	            statement.setObject(i + 1, parameters.get(i));
+	        }
+
+	        try (ResultSet resultSet = statement.executeQuery()) {
+
+	            while (resultSet.next()) {
+
+	                Skill skill = new Skill();
+
+	                skill.setSkillId(resultSet.getInt("skill_id"));
+	                skill.setUserId(resultSet.getInt("user_id"));
+	                skill.setCategoryId(resultSet.getInt("category_id"));
+	                skill.setSkillName(resultSet.getString("skill_name"));
+	                skill.setSkillDetails(resultSet.getString("skill_details"));
+	                skill.setAvailableMode(resultSet.getString("available_mode"));
+	                skill.setCategoryName(resultSet.getString("category_name"));
+	                skill.setUserName(resultSet.getString("user_name"));
+
+	                skills.add(skill);
+	            }
+	        }
+	    }
+
+	    return skills;
+	}
 }

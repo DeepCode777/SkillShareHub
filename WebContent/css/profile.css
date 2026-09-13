@@ -1,0 +1,51 @@
+.profile-container {
+    width: 90%;
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.profile-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 25px;
+    background-color: #fff;
+}
+
+.profile-image {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.profile-image img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ccc;
+}
+
+.default-profile-image {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.profile-details p {
+    margin: 12px 0;
+}
+
+.profile-details strong {
+	display: inline-block;
+    width: 130px;
+}
+
+.profile-container a {
+    margin-right: 15px;
+}
+
+/*Edit Profile */

@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.skillsharehub.model.User" %>
 
 <!DOCTYPE html>
@@ -26,6 +24,7 @@
 
 <p>User ID: <%= user.getUserId() %></p>
 
+<a href="${pageContext.request.contextPath}/pages/profile">Profile</a>
 <a href="${pageContext.request.contextPath}/pages/skills">Skills</a>
 <a href="${pageContext.request.contextPath}/pages/my-skills">My Skills</a>
 <a href="${pageContext.request.contextPath}/pages/requests">Learning Requests</a>

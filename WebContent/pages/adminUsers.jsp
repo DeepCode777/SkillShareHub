@@ -103,5 +103,6 @@
 <% } %>
 
 </table>
+<a href="${pageContext.request.contextPath}/pages/admin.jsp">Back to Admin Panel</a>
 </body>
 </html>
