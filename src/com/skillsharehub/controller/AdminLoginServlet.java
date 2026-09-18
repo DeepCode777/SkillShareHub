@@ -20,8 +20,7 @@ public class AdminLoginServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         PrintWriter out = response.getWriter();
 
@@ -48,24 +47,18 @@ public class AdminLoginServlet extends HttpServlet {
         try {
 
             Admin admin = adminDAO.loginAdmin(username);
-
             if (admin != null && PasswordUtil.checkPassword(password, admin.getPassword())) {
 
                 HttpSession session = request.getSession();
-
                 session.setAttribute("loggedInAdmin", admin);
-
                 response.sendRedirect("admin.jsp");
 
             } else {
-
                 out.println("Invalid username or password.");
             }
 
         } catch (SQLException e) {
-
             e.printStackTrace();
-
             out.println("Database error occurred.");
         }
     }

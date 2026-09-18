@@ -93,6 +93,11 @@ public class LearningRequestServlet extends HttpServlet {
             } else if ("SKILL_NOT_FOUND".equals(result)) {
 
                 response.sendRedirect(request.getContextPath() + "/pages/requests.jsp?request=notfound");
+
+            } else if ("SKILL_NOT_AVAILABLE".equals(result)) {
+
+                response.sendRedirect(request.getContextPath() + "/pages/requests.jsp?request=notavailable");
+
             } else {
 
                 response.sendRedirect(request.getContextPath() + "/pages/requests.jsp?request=failed");
@@ -107,7 +112,7 @@ public class LearningRequestServlet extends HttpServlet {
         }
     }
     
-    // 
+    // LR Skills Form Get
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -132,13 +137,19 @@ public class LearningRequestServlet extends HttpServlet {
             int skillId = Integer.parseInt(skillIdParameter);
 
             // Find selected skill
-            SkillDAO skillDAO = new com.skillsharehub.dao.SkillDAO();
+            SkillDAO skillDAO = new SkillDAO();
 
             Skill skill = skillDAO.getSkillById(skillId);
 
-            // Skill not found
+         // Skill not found
             if (skill == null) {
                 response.sendRedirect(request.getContextPath() + "/pages/skills?request=notfound");
+                return;
+            }
+
+            // Available mode validation
+            if (!"Yes".equals(skill.getAvailableMode())) {
+                response.sendRedirect(request.getContextPath() + "/pages/skills?request=notavailable");
                 return;
             }
 

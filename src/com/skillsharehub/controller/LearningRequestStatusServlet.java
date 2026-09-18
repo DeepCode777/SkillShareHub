@@ -83,13 +83,11 @@ public class LearningRequestStatusServlet extends HttpServlet {
             }
 
             // COMPLETE
-
             else if ("complete".equals(action)) {
                 result = learningRequestService.completeLearningRequest(requestId,userId);
             }
 
             // INVALID ACTION
-
             else {
                 response.sendRedirect(request.getContextPath() + "/pages/requests?request=invalid");
                 return;

@@ -43,10 +43,10 @@
         <%= skill.getUserName() %>
     </p>
 
-    <p>
+    <%-- <p>
         <strong>Skill ID:</strong>
         <%= skill.getSkillId() %>
-    </p>
+    </p> --%>
     <br>
     <%
         if (skill.getAvailableMode() != null

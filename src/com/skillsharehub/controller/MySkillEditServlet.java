@@ -119,6 +119,15 @@ public class MySkillEditServlet extends HttpServlet {
 
             int skillId = Integer.parseInt(skillIdParameter);
             int categoryId = Integer.parseInt(categoryIdParameter);
+            
+            availableMode = availableMode.trim();
+            if (!"Yes".equals(availableMode)
+                    && !"No".equals(availableMode)
+                    && !"Cancel".equals(availableMode)) {
+
+                response.sendRedirect(request.getContextPath() + "/pages/my-skills/edit?skillId=" + skillIdParameter + "&error=invalid");
+                return;
+            }
 
             if (skillId <= 0 || categoryId <= 0) {
                 response.sendRedirect(request.getContextPath() + "/pages/my-skills?skill=invalid");

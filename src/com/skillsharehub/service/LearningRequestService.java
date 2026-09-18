@@ -23,6 +23,11 @@ public class LearningRequestService {
         if (skill == null) {
             return "SKILL_NOT_FOUND";
         }
+        
+        // Available mode validation
+        if (!"Yes".equals(skill.getAvailableMode())) {
+            return "SKILL_NOT_AVAILABLE";
+        }
 
         // Self-request validation
         if (skill.getUserId() == request.getSenderUserId()) {
@@ -52,7 +57,7 @@ public class LearningRequestService {
         return "FAILED";
     }
     
-    //
+    // Update Status
     public String updateRequestStatus(int requestId, int receiverUserId, String newStatus) throws Exception {
 
         // Validate new status
@@ -70,7 +75,7 @@ public class LearningRequestService {
         return "UPDATE_FAILED";
     }
     
-    //
+    // Cancel Status
     public String cancelLearningRequest(int requestId, int userId) throws Exception {
 
         boolean cancelled = learningRequestDAO.cancelLearningRequest(requestId,userId);
@@ -81,7 +86,7 @@ public class LearningRequestService {
         return "CANCEL_FAILED";
     }
     
-    //
+    // Complete Status
     public String completeLearningRequest(int requestId, int receiverUserId) throws Exception {
 
         boolean completed = learningRequestDAO.completeLearningRequest(requestId, receiverUserId);

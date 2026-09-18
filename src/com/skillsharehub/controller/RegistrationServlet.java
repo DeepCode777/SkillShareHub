@@ -25,8 +25,7 @@ public class RegistrationServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
     	PrintWriter out = response.getWriter();
     	
@@ -194,7 +193,6 @@ public class RegistrationServlet extends HttpServlet {
     	    }
     	}
     	
-    	
     	// Image Validation
     	Part profilePicture = request.getPart("profilePicture");
     	if (profilePicture != null && profilePicture.getSize() > 0) {
@@ -209,7 +207,6 @@ public class RegistrationServlet extends HttpServlet {
     	    }
 
     	    long maxSize = 2 * 1024 * 1024; // 2 MB
-
     	    if (profilePicture.getSize() > maxSize) {
     	        out.println("Profile image must not exceed 2 MB.");
     	        return;
@@ -217,7 +214,6 @@ public class RegistrationServlet extends HttpServlet {
     	}
     	
     	String uploadPath = getServletContext().getRealPath("/images/profile");
-
     	String profileImageName = saveProfileImage(profilePicture, uploadPath);
 
     	boolean imageSaved = profileImageName != null;
@@ -249,17 +245,14 @@ public class RegistrationServlet extends HttpServlet {
             }
 
         } catch (SQLException e) {
-
             e.printStackTrace();
-
             if (imageSaved) {
                 deleteProfileImage(uploadPath, profileImageName);
             }
             out.println("Database error occurred.");
         }
     }
-    private String saveProfileImage(Part profilePicture, String uploadPath)
-            throws IOException {
+    private String saveProfileImage(Part profilePicture, String uploadPath) throws IOException {
 
         if (profilePicture == null || profilePicture.getSize() == 0) {
             return null;
@@ -290,9 +283,7 @@ public class RegistrationServlet extends HttpServlet {
         }
 
         String filePath = uploadPath + File.separator + profileImageName;
-
         profilePicture.write(filePath);
-
         return profileImageName;
     }
     

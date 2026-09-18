@@ -32,8 +32,7 @@ public class ProfileEditServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession(false);
 
@@ -206,15 +205,12 @@ public class ProfileEditServlet extends HttpServlet {
                 return;
             }
 
-            String uploadPath =
-                    getServletContext().getRealPath("/images/profile");
+            String uploadPath = getServletContext().getRealPath("/images/profile");
 
-            String originalFileName =
-                    profilePicture.getSubmittedFileName();
+            String originalFileName = profilePicture.getSubmittedFileName();
 
             if (originalFileName == null || originalFileName.trim().isEmpty()) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-                        "Invalid profile image filename.");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid profile image filename.");
                 return;
             }
 

@@ -91,8 +91,7 @@ public class LearningRequestDAO {
 	    List<LearningRequest> requests = new ArrayList<>();
 
 	    try (Connection connection = DBConnection.getConnection();
-	         PreparedStatement statement =
-	                 connection.prepareStatement(GET_SENT_REQUESTS_SQL)) {
+	         PreparedStatement statement = connection.prepareStatement(GET_SENT_REQUESTS_SQL)) {
 
 	        statement.setInt(1, userId);
 

@@ -157,8 +157,6 @@ public class User {
 		this.createdAt = createdAt;
 	}
 
-
-
 	public User(int userId, String fullName, String email, String password, String phone, String gender,
 			Date date_of_birth, String city, String bio, String profileImage, Timestamp createdAt) {
 		super();
@@ -175,11 +173,7 @@ public class User {
 		this.createdAt = createdAt;
 	}
 
-
-
 	public User() {
-		// TODO Auto-generated constructor stub
-	}
-	
 		
+	}
 }

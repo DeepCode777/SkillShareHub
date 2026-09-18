@@ -30,7 +30,6 @@ public class Skill {
 		this.skillName = skillName;
 		this.skillDetails = skillDetails;
 		this.availableMode = availableMode;
-		this.categoryId = categoryId;
 		this.categoryName = categoryName;
 		this.userName = userName;
 	}

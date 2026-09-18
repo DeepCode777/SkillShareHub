@@ -15,8 +15,7 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/pages/*")
 public class AuthorizationFilter implements Filter {
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-	        FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 	    HttpServletRequest httpRequest = (HttpServletRequest) request;
 	    HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -26,24 +25,19 @@ public class AuthorizationFilter implements Filter {
 	    String requestedResource = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 
 	    if (isAdminResource(requestedResource)) {
-
 	        if (session != null && session.getAttribute("loggedInAdmin") != null) {
-
 	            chain.doFilter(request, response);
 
 	        } else {
-
 	            httpResponse.sendRedirect(httpRequest.getContextPath() + "/pages/adminLogin.jsp");
 	        }
 
 	    } else {
-
 	        chain.doFilter(request, response);
 	    }
 	}
 	
 	private boolean isAdminResource(String resource) {
-
 	    return resource.equals("/pages/admin.jsp") || resource.equals("/pages/admin/users") || resource.equals("/pages/admin/categories") || resource.equals("/pages/admin/skills");
 	}
 }

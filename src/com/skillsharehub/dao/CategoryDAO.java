@@ -120,11 +120,9 @@ public class CategoryDAO {
 	    boolean rowDeleted = false;
 
 	    try (Connection connection = DBConnection.getConnection();
-	         PreparedStatement preparedStatement =
-	                 connection.prepareStatement(DELETE_CATEGORY_SQL)) {
+	         PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CATEGORY_SQL)) {
 
 	        preparedStatement.setInt(1, categoryId);
-
 	        rowDeleted = preparedStatement.executeUpdate() > 0;
 
 	    } catch (Exception e) {

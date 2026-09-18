@@ -87,6 +87,16 @@ public class MySkillsAddServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/pages/my-skills/add?error=invalid");
                 return;
             }
+            
+            availableMode = availableMode.trim();
+
+            if (!"Yes".equals(availableMode)
+                    && !"No".equals(availableMode)
+                    && !"Cancel".equals(availableMode)) {
+
+                response.sendRedirect(request.getContextPath() + "/pages/my-skills/add?error=invalid");
+                return;
+            }
 
             Skill skill = new Skill();
 
