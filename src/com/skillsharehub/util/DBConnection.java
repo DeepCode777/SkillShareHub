@@ -12,13 +12,12 @@ public class DBConnection {
 	public static Connection getConnection() throws SQLException {
 	
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("Diver Loaded");
-		}catch (Exception e) {
-			System.out.println(e);
+		    Class.forName("com.mysql.cj.jdbc.Driver");
+		    System.out.println("Driver Loaded");
+		} catch (ClassNotFoundException e) {
+		    throw new SQLException("MySQL JDBC Driver not found.", e);
 		}
 		Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
-		
 		System.out.println("Connection Succesfull");
 			
 		return connection;

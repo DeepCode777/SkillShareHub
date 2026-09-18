@@ -84,7 +84,8 @@ public class AdminSkillServlet extends HttpServlet {
 	        request.getRequestDispatcher("/pages/adminSkills.jsp").forward(request, response);
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+		    e.printStackTrace();
+		    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to load admin skills.");
 		}
     }
 
@@ -94,12 +95,47 @@ public class AdminSkillServlet extends HttpServlet {
 
         if ("add".equals(action)) {
 
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+        	String userIdParameter = request.getParameter("userId");
+        	String categoryIdParameter = request.getParameter("categoryId");
+        	String skillName = request.getParameter("skillName");
+        	String skillDetails = request.getParameter("skillDetails");
+        	String availableMode = request.getParameter("availableMode");
 
-            String skillName = request.getParameter("skillName");
-            String skillDetails = request.getParameter("skillDetails");
-            String availableMode = request.getParameter("availableMode");
+        	if (userIdParameter == null || userIdParameter.trim().isEmpty()
+        	        || categoryIdParameter == null || categoryIdParameter.trim().isEmpty()
+        	        || skillName == null || skillName.trim().isEmpty()
+        	        || skillDetails == null || skillDetails.trim().isEmpty()
+        	        || availableMode == null || availableMode.trim().isEmpty()) {
+        	    response.sendRedirect(request.getContextPath() + "/pages/admin/skills?action=add&error=invalid");
+        	    return;
+        	}
+
+        	int userId;
+        	int categoryId;
+
+        	try {
+        	    userId = Integer.parseInt(userIdParameter.trim());
+        	    categoryId = Integer.parseInt(categoryIdParameter.trim());
+        	} catch (NumberFormatException e) {
+        	    response.sendRedirect(request.getContextPath() + "/pages/admin/skills?action=add&error=invalid");
+        	    return;
+        	}
+
+        	if (userId <= 0 || categoryId <= 0) {
+        	    response.sendRedirect(request.getContextPath() + "/pages/admin/skills?action=add&error=invalid");
+        	    return;
+        	}
+
+        	skillName = skillName.trim();
+        	skillDetails = skillDetails.trim();
+        	availableMode = availableMode.trim();
+
+        	if (!"Yes".equals(availableMode)
+        	        && !"No".equals(availableMode)
+        	        && !"Cancel".equals(availableMode)) {
+        	    response.sendRedirect(request.getContextPath() + "/pages/admin/skills?action=add&error=invalid");
+        	    return;
+        	}
 
             Skill skill = new Skill();
 
@@ -121,16 +157,51 @@ public class AdminSkillServlet extends HttpServlet {
         
         // Update Skill Button
         try {
-	        if ("update".equals(action)) {
-	
-	            int skillId = Integer.parseInt(request.getParameter("skillId"));
-	            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-	
-	            String skillName = request.getParameter("skillName");
-	            String skillDetails = request.getParameter("skillDetails");
-	            String availableMode = request.getParameter("availableMode");
-	
-	            Skill skill = skillDAO.getSkillById(skillId);
+        	if ("update".equals(action)) {
+
+        	    String skillIdParameter = request.getParameter("skillId");
+        	    String categoryIdParameter = request.getParameter("categoryId");
+        	    String skillName = request.getParameter("skillName");
+        	    String skillDetails = request.getParameter("skillDetails");
+        	    String availableMode = request.getParameter("availableMode");
+
+        	    if (skillIdParameter == null || skillIdParameter.trim().isEmpty()
+        	            || categoryIdParameter == null || categoryIdParameter.trim().isEmpty()
+        	            || skillName == null || skillName.trim().isEmpty()
+        	            || skillDetails == null || skillDetails.trim().isEmpty()
+        	            || availableMode == null || availableMode.trim().isEmpty()) {
+        	        response.sendRedirect(request.getContextPath() + "/pages/admin/skills?action=edit&error=invalid");
+        	        return;
+        	    }
+
+        	    int skillId;
+        	    int categoryId;
+
+        	    try {
+        	        skillId = Integer.parseInt(skillIdParameter.trim());
+        	        categoryId = Integer.parseInt(categoryIdParameter.trim());
+        	    } catch (NumberFormatException e) {
+        	        response.sendRedirect(request.getContextPath() + "/pages/admin/skills?action=edit&error=invalid");
+        	        return;
+        	    }
+
+        	    if (skillId <= 0 || categoryId <= 0) {
+        	        response.sendRedirect(request.getContextPath() + "/pages/admin/skills?action=edit&error=invalid");
+        	        return;
+        	    }
+
+        	    skillName = skillName.trim();
+        	    skillDetails = skillDetails.trim();
+        	    availableMode = availableMode.trim();
+
+        	    if (!"Yes".equals(availableMode)
+        	            && !"No".equals(availableMode)
+        	            && !"Cancel".equals(availableMode)) {
+        	        response.sendRedirect(request.getContextPath() + "/pages/admin/skills?action=edit&error=invalid");
+        	        return;
+        	    }
+
+        	    Skill skill = skillDAO.getSkillById(skillId);
 	
 	            if (skill == null) {
 	                response.sendRedirect(request.getContextPath() + "/pages/admin/skills?edit=notfound");
@@ -166,8 +237,9 @@ public class AdminSkillServlet extends HttpServlet {
 
 	            return;
 	        }
-	    } catch (SQLException e) {
-			e.printStackTrace();
-		}
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to process admin skill request.");
+        }
     }
 }

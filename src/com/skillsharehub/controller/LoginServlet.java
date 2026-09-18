@@ -59,21 +59,15 @@ public class LoginServlet extends HttpServlet {
             if (user != null && PasswordUtil.checkPassword(password, user.getPassword())) {
 
                 HttpSession session = request.getSession();
-
                 session.setAttribute("loggedInUser", user);
-
                 response.sendRedirect("dashboard.jsp");
 
             } else {
-
                 out.println("Invalid email or password.");
-
             }
 
         } catch (SQLException e) {
-
             e.printStackTrace();
-
             out.println("Database error occurred.");
         }
     }

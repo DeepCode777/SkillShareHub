@@ -87,7 +87,7 @@ public class MySkillEditServlet extends HttpServlet {
         }
     }
     
-    //
+    // Edit Form Data
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

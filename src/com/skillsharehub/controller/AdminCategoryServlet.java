@@ -141,8 +141,13 @@ public class AdminCategoryServlet extends HttpServlet {
 
             try {
 
-                int categoryId = Integer.parseInt(categoryIdParameter);
-                if (categoryName == null || categoryName.trim().isEmpty()) {
+            	int categoryId = Integer.parseInt(categoryIdParameter);
+            	if (categoryId <= 0) {
+            	    response.sendRedirect(request.getContextPath() + "/pages/admin/categories?edit=invalid");
+            	    return;
+            	}
+
+            	if (categoryName == null || categoryName.trim().isEmpty()) {
                     response.sendRedirect(request.getContextPath() + "/pages/admin/categories?edit=invalid");
 
                     return;
@@ -162,14 +167,16 @@ public class AdminCategoryServlet extends HttpServlet {
                  * validate and upload it.
                  */
                 if (iconPart != null && iconPart.getSize() > 0) {
-                    String originalFileName = iconPart.getSubmittedFileName();
+                	String originalFileName = iconPart.getSubmittedFileName();
+                	String contentType = iconPart.getContentType();
 
-                    if (originalFileName == null || !originalFileName.toLowerCase().endsWith(".png")) {
+                	if (originalFileName == null
+                	        || !originalFileName.toLowerCase().endsWith(".png")
+                	        || !"image/png".equals(contentType)) {
+                	    response.sendRedirect(request.getContextPath() + "/pages/admin/categories?edit=invalid");
 
-                        response.sendRedirect(request.getContextPath() + "/pages/admin/categories?edit=invalid");
-
-                        return;
-                    }
+                	    return;
+                	}
 
                     String uploadPath = getServletContext().getRealPath("/images/categories");
 
@@ -244,9 +251,13 @@ public class AdminCategoryServlet extends HttpServlet {
             String categoryIdParameter = request.getParameter("categoryId");
 
             try {
-                int categoryId = Integer.parseInt(categoryIdParameter);
-                boolean deleted = categoryDAO.deleteCategory(categoryId);
+            	int categoryId = Integer.parseInt(categoryIdParameter);
+            	if (categoryId <= 0) {
+            	    response.sendRedirect(request.getContextPath() + "/pages/admin/categories?delete=invalid");
+            	    return;
+            	}
 
+            	boolean deleted = categoryDAO.deleteCategory(categoryId);
                 if (deleted) {
                     response.sendRedirect(request.getContextPath() + "/pages/admin/categories?delete=success");
                 } else {

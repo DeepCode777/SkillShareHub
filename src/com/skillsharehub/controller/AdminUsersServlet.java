@@ -31,13 +31,10 @@ public class AdminUsersServlet extends HttpServlet {
         try {
 
             List<User> users = userDAO.getAllUsers();
-
             request.setAttribute("users", users);
-
             request.getRequestDispatcher("/pages/adminUsers.jsp").forward(request, response);
 
         } catch (SQLException e) {
-
             e.printStackTrace();
             // server error
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to load users.");
@@ -73,24 +70,19 @@ public class AdminUsersServlet extends HttpServlet {
                 boolean deleted = userDAO.deleteUser(userId);
 
                 if (deleted) {
-
                     response.sendRedirect(request.getContextPath() + "/pages/admin/users?delete=success");
 
                 } else {
-
                     response.sendRedirect(request.getContextPath() + "/pages/admin/users?delete=failed");
                 }
             } catch (Exception e) {
-
                 e.printStackTrace();
-
                 response.sendRedirect(request.getContextPath() + "/pages/admin/users");
             }
         }
         
         // View Users By ID (Admin)
         if ("view".equals(action)) {
-
             String userIdParameter = request.getParameter("userId");
 
             if (userIdParameter == null || userIdParameter.trim().isEmpty()) {
@@ -101,7 +93,6 @@ public class AdminUsersServlet extends HttpServlet {
             try {
 
                 int userId = Integer.parseInt(userIdParameter);
-
                 if (userId <= 0) {
                     response.sendRedirect(request.getContextPath() + "/pages/admin/users");
                     return;
@@ -129,19 +120,12 @@ public class AdminUsersServlet extends HttpServlet {
                     request.getRequestDispatcher("/pages/userDetails.jsp").forward(request, response);
 
                 } else {
-
-                    response.sendRedirect(
-                            request.getContextPath() + "/pages/admin/users?view=notfound"
-                    );
+                    response.sendRedirect(request.getContextPath() + "/pages/admin/users?view=notfound");
                 }
 
             } catch (NumberFormatException | SQLException e) {
-
                 e.printStackTrace();
-
-                response.sendRedirect(
-                        request.getContextPath() + "/pages/admin/users?view=error"
-                );
+                response.sendRedirect(request.getContextPath() + "/pages/admin/users?view=error");
             }
         }
     }
