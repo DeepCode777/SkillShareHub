@@ -68,6 +68,7 @@ public class RegistrationServlet extends HttpServlet {
 
     	    if (userDAO.isEmailExists(email)) {
     	        out.println("Email is already registered.");
+    	        response.sendRedirect("register.jsp");
     	        return;
     	    }
 
@@ -239,9 +240,9 @@ public class RegistrationServlet extends HttpServlet {
             boolean result = userDAO.insertUser(user);
 
             if (result) {
-               out.println("Registration successful.");
+               response.sendRedirect("login.jsp");
             } else {
-                out.println("Registration failed.");
+                response.sendRedirect("register.jsp");
             }
 
         } catch (SQLException e) {

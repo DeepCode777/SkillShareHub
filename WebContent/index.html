@@ -1,69 +1,425 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="ISO-8859-1">
-<title>Skill Share Hub</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillShareHub — Learn Together, Grow Together</title>
+  <meta name="description" content="Peer-to-peer student skill-sharing platform. Exchange knowledge, find mentors, and master new skills together.">
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="css/assets/style2.css">
+  <style>
+    /* Hero Section */
+    .hero-section {
+      padding: 4.5rem 0 3.5rem 0;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      background-color: var(--primary-light);
+      color: var(--primary);
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-size: 2.85rem;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title span {
+      color: #7FFF00;
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-img-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+
+    .hero-img-wrapper img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Section Styles */
+    .section-padding {
+      padding: 4rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto 3rem auto;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Steps Layout */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem 1.5rem;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .step-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      background-color: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      margin: 3rem 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+        padding: 3rem 0;
+        text-align: center;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .hero-title {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header>
-        <a href="#" class="logo">Skill Share <span>Hub</span></a>
-        <nav class="nav-likes">
-            <a href="#about">About</a>
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How It Works</a>
-        </nav>
-        <div class="nav-right">
-            <a href="#login" class="login">Login</a>
-            <a href="#signup" class="signup">Sign Up</a>
-        </div>
-    </header>
+  <!-- Top Navigation Header -->
+  <header class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-brand" aria-label="SkillShareHub Home">
+        <img src="images/logo.png" alt="SkillShareHub Logo" style="height: 42px; width: 42px; border-radius: 50%; object-fit: cover;">
+        <span>SkillShareHub</span>
+      </a>
 
-    <!-- Main Content Section -->
-    <main>
-        <div class="hero">
-            <section class="hero-image">
-                <img src="images/hero-image.jpg" alt="Skill Sharing">
-                <h2>Welcome to Skill Share Hub</h2>
-                <p>Learn Together, Grow Together</p>
-                <a href="pages/login.jsp" class="cta-button">Get Started</a>
-                <a href="pages/register.jsp" class="cta-button">Sign Up</a>
-            </section>
+      <button type="button" class="theme-toggle-btn mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle navigation menu" style="display: none;">
+        <span id="hamburgerIcon">☰</span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="pages/register.jsp" class="nav-link">Explore Skills</a></li>
+        <li><a href="pages/login.jsp" class="nav-link font-medium">Login</a></li>
+        <li><a href="pages/register.jsp" class="btn btn-primary btn-sm">Join Free</a></li>
+        <li>
+          <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle visual theme" title="Switch Theme">
+            <span id="themeIcon">🌓</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Body Content -->
+  <main class="page-content">
+    <div class="container">
+      
+      <!-- Hero Section -->
+      <section class="hero-section" aria-label="Hero Introduction">
+        <div>
+          <div class="hero-badge">
+            <span>🌱</span> Peer-to-Peer Learning Network
+          </div>
+          <h1 class="hero-title">
+            Learn Together,<br>
+            <span>Grow Together.</span>
+          </h1>
+          <p class="hero-subtitle">
+            SkillShareHub connects students and self-learners to exchange skills directly. 
+            Teach what you know, master what you need, and build a collaborative academic community.
+          </p>
+          <div class="hero-actions">
+            <a href="pages/register.jsp" class="btn btn-primary">Get Started Free</a>
             
-            <!-- About Section -->
-            <section id="about" class="about">
-                <h2>About Skill Share Hub</h2>
-                <p>Skill Share Hub is a platform where students can exchange knowledge and skills with each other and learn from each other.</p>
-            </section>
-
-            <!-- Features Section -->
-            <section id="features" class="features">
-                <h2>Features</h2>
-                <ul>
-                    <li>Find people with useful skills</li>
-                    <li>Share your own skills and knowledge</li>
-                    <li>Search for learning opportunities</li>
-                    <li>Send skill exchange requests and offers</li>
-                </ul>
-            </section>
-
-            <!-- How It Works Section -->
-            <section id="how-it-works" class="how-it-works">
-                <h2>How It Works</h2>
-                <ol>
-                    <li>Sign up and create your profile.</li>
-                    <li>Add your skills and expertise.</li>
-                    <li>Search for skills you want to learn.</li>
-                    <li>Connect with others and start learning together!</li>
-                </ol>
-            </section>
+          </div>
         </div>
-    </main>
 
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2026 Skill Share Hub. All rights reserved.</p>
-    </footer>
+        <div class="hero-visual">
+          <div class="hero-img-wrapper">
+            <!-- Curated online stock image depicting collaborative peer learning -->
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80" 
+                 alt="Students learning and sharing skills together" 
+                 loading="lazy">
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="section-padding" aria-label="About SkillShareHub">
+        <div class="section-header">
+          <h2 class="section-title">Why Peer Skill Sharing?</h2>
+          <p class="section-subtitle">A straightforward alternative to traditional paywalled courses. We focus on real people, real conversations, and mutual growth.</p>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="card">
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">🤝</div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Direct Peer Exchange</h3>
+            <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
+              Learn directly from peers who recently navigated the same learning curves, offering actionable, relatable advice.
+            </p>
+          </div>
+
+          <div class="card">
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">🎓</div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Double-Sided Growth</h3>
+            <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
+              Teaching is the ultimate retention strategy. Act as a skill provider to reinforce your expertise while learning new topics.
+            </p>
+          </div>
+
+          <div class="card">
+            <div style="font-size: 2rem; margin-bottom: 0.75rem;">💡</div>
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Cost-Free Access</h3>
+            <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
+              No subscriptions, hidden credit fees, or paywalls. A purely collaborative student-driven environment.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="section-padding" style="background-color: var(--surface-alt); border-radius: var(--radius-lg); padding: 3rem 2rem;" aria-label="Platform Features">
+        <div class="section-header">
+          <h2 class="section-title">Core Platform Features</h2>
+          <p class="section-subtitle">Everything you need to exchange knowledge without clutter.</p>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3 style="font-size: 1.15rem; color: var(--primary);">🔍 Discover Skills & Mentors</h3>
+            <p class="text-muted" style="margin-bottom: 0;">
+              Search through categorized skills across software engineering, graphic design, academics, and languages with stated experience levels.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 style="font-size: 1.15rem; color: var(--primary);">📝 Share What You Excel At</h3>
+            <p class="text-muted" style="margin-bottom: 0;">
+              Publish your skills in minutes. Describe your experience level, what you can teach, and receive direct requests from peers.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 style="font-size: 1.15rem; color: var(--primary);">📬 Structured Learning Requests</h3>
+            <p class="text-muted" style="margin-bottom: 0;">
+              Send personalized learning inquiries. Providers can accept or reject requests with clean, authoritative status tracking.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 style="font-size: 1.15rem; color: var(--primary);">🛡️ Academic Integrity & Control</h3>
+            <p class="text-muted" style="margin-bottom: 0;">
+              Verified user profiles, categorized tags, and moderated listings maintain high-quality interactions across the campus community.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works Section -->
+      <section id="how-it-works" class="section-padding" aria-label="How It Works">
+        <div class="section-header">
+          <h2 class="section-title">How It Works</h2>
+          <p class="section-subtitle">Four simple steps to start collaborating with other learners.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h4>Register Profile</h4>
+            <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0;">
+              Create your account with your academic details, interests, and background.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h4>List Your Skills</h4>
+            <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0;">
+              Add skills you are confident in teaching, stating your level from beginner to advanced.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h4>Find a Skill</h4>
+            <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0;">
+              Search the repository to discover peers who offer skills you want to learn.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <h4>Request & Learn</h4>
+            <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0;">
+              Submit a learning request, coordinate directly, and grow your abilities together.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Call to Action Banner -->
+      <section class="cta-banner">
+        <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Ready to expand your skillset?</h2>
+        <p class="text-muted" style="max-width: 500px; margin: 0 auto 1.5rem auto;">
+          Join your fellow students and start trading skills today. No costs, no contracts.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="pages/register.jsp" class="btn btn-primary">Create Your Account</a>
+          <a href="pages/login.jsp" class="btn btn-outline">Sign In</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-content">
+      <div>
+        <p class="font-bold" style="margin-bottom: 0.25rem; color: #0041C2 ; text-align: center;">SkillShareHub</p>
+        <p class="text-muted" style="margin-bottom: 0; font-size: 0.85rem;">Learn Together, <span style="color: #7FFF00;">Grow Together</span>. A peer-to-peer learning network.</p>
+      </div>
+
+      <div style="display: flex; gap: 1.5rem; align-items: center; font-size: 0.875rem;">
+        <a href="pages/register.jsp" class="text-muted">Register</a>
+        <a href="pages/login.jsp" class="text-muted">Sign In</a>
+        <a href="pages/adminLogin.jsp" class="text-muted">Admin</a>
+      </div>
+
+      <div>
+        <p class="text-muted" style="margin-bottom: 0; font-size: 0.8rem;">
+          &copy; 2026 SkillShareHub. Built for student collaboration.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme Switching & Mobile Navigation Script -->
+  <script>
+    (function() {
+      // 1. Theme Persistence
+      var savedTheme = localStorage.getItem('ssh_theme');
+      var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+      
+      document.documentElement.setAttribute('data-theme', currentTheme);
+
+      function updateThemeIcons(theme) {
+        var icon = document.getElementById('themeIcon');
+        if (icon) {
+          icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+      }
+
+      updateThemeIcons(currentTheme);
+
+      var toggleBtn = document.getElementById('themeToggleBtn');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', function() {
+          var activeTheme = document.documentElement.getAttribute('data-theme');
+          var nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', nextTheme);
+          localStorage.setItem('ssh_theme', nextTheme);
+          updateThemeIcons(nextTheme);
+        });
+      }
+
+      // 2. Mobile Menu Toggle
+      var menuBtn = document.getElementById('mobileMenuBtn');
+      var navLinks = document.getElementById('navLinks');
+      if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', function() {
+          var isOpen = navLinks.classList.toggle('is-open');
+          var hamburger = document.getElementById('hamburgerIcon');
+          if (hamburger) {
+            hamburger.textContent = isOpen ? '✕' : '☰';
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
