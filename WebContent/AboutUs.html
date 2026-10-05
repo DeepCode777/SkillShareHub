@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — SkillShareHub</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="css/assets/style2.css">
+  <style>
+    /* Page-specific layout refinements using existing design tokens */
+    .about-hero {
+      padding: 3rem 0 2rem 0;
+      text-align: center;
+    }
+
+    .about-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-hero-lead {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 1.5rem auto;
+      line-height: 1.7;
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .contributor-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .contributor-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background-color: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .contributor-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-full);
+      background-color: var(--primary);
+      color: #ffffff;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+    <!-- Shared Navigation -->
+ <nav class="navbar" role="navigation" aria-label="Main Navigation">
+  <div class="container nav-container">
+    <!-- Brand Logo & Title -->
+    <a href="index.html" class="nav-brand" aria-label="SkillShareHub Home">
+      <img src="images/logo.png" alt="SkillShareHub Logo" style="height: 42px; width: 42px; border-radius: 50%; object-fit: cover;">
+      <span>SkillShare<span style="color: #7FFF00;">Hub</span></span>
+    </a>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button type="button" class="theme-toggle-btn mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle navigation menu" style="display: none;">
+      <span id="hamburgerIcon">☰</span>
+    </button>
+
+    <!-- Navigation Items -->
+    <ul class="nav-links" id="navLinks">
+        <!-- Admin Guest Navigation -->
+        <li><a href="pages/login.jsp" class="nav-link">User Login</a></li>
+        <li><a href="pages/adminLogin.jsp" class="nav-link">Admin Login</a></li>
+        <li><a href="pages/adminRegister.jsp" class="btn btn-primary btn-sm">Register</a></li>
+
+
+      <!-- Theme Switcher Button -->
+      <li>
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle visual theme" title="Switch Theme">
+          <span id="themeIcon">🌓</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+  <!-- Main Content Layout -->
+  <main class="page-content">
+    <div class="container">
+      
+      <!-- Hero / Introduction -->
+      <section class="about-hero">
+        <h1>About Us</h1>
+        <p class="about-hero-lead">
+          Welcome to <strong style="color: var(--primary)">SkillShareHub</strong>! We are a community-driven platform dedicated to connecting individuals with diverse skills and knowledge. Our mission is to empower people to learn, share, and grow together by providing a space where they can exchange expertise and collaborate on various projects.
+        </p>
+      </section>
+
+      <!-- Core Highlights (Grid Layout) -->
+      <section class="grid grid-2" style="margin-bottom: 2.5rem;">
+        
+        <!-- Platform Philosophy -->
+        <article class="card">
+          <div class="card-header">
+            <h3>Knowledge Exchange</h3>
+            <span class="badge badge-level">Peer-to-Peer</span>
+          </div>
+          <div class="card-body">
+            <p>
+              At SkillShareHub, we believe that everyone has something valuable to offer. Whether you're an expert in a particular field or just starting your learning journey, our platform allows you to share your skills and learn from others without paying for traditional courses.
+            </p>
+            <div class="tag-cloud">
+              <span class="badge badge-category">Technology</span>
+              <span class="badge badge-category">Arts &amp; Design</span>
+              <span class="badge badge-category">Business</span>
+              <span class="badge badge-category">Health</span>
+              <span class="badge badge-category">&amp; More</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Our Mission -->
+        <article class="card">
+          <div class="card-header">
+            <h3>Our Mission</h3>
+            <span class="badge badge-accepted">Core Goal</span>
+          </div>
+          <div class="card-body">
+            <p>
+              Our mission is to create a global community where individuals can freely share their skills and knowledge, fostering innovation and personal development. We strive to make learning accessible to everyone, regardless of their background or location.
+            </p>
+            <p class="text-muted" style="margin-bottom: 0;">
+              Together, we can build a world where knowledge is shared freely and everyone has the opportunity to thrive.
+            </p>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Team & Contributors Section -->
+      <section class="grid grid-2" style="margin-bottom: 3rem;">
+        
+        <!-- Our Team -->
+        <article class="card">
+          <div class="card-header">
+            <h3>Our Team</h3>
+          </div>
+          <div class="card-body">
+            <p>
+              Our team is composed of passionate individuals who are committed to creating a positive impact in the world of skill sharing. We come from diverse backgrounds and bring a wealth of experience in education, technology, and community building.
+            </p>
+            <p style="margin-bottom: 0;">
+              Our goal is to provide a seamless and engaging experience for our users, ensuring that they can easily connect with others and access valuable resources.
+            </p>
+          </div>
+        </article>
+
+        <!-- Contributors List -->
+        <article class="card">
+          <div class="card-header">
+            <h3>Contributors</h3>
+            <span class="badge badge-level">Project Leads</span>
+          </div>
+          <div class="card-body">
+            <p class="text-muted">Direct contributors to the SkillShareHub platform development:</p>
+            <ul class="contributor-list">
+              <li class="contributor-item">
+                <span class="contributor-badge">1</span>
+                <span>Deep Poptani</span>
+              </li>
+              <li class="contributor-item">
+                <span class="contributor-badge">2</span>
+                <span>Gaurav Talreja</span>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- Call to Action Banner -->
+      <section class="card text-center" style="margin-bottom: 3.5rem; background-color: var(--surface-alt);">
+        <div class="card-body" style="padding: 2rem 1rem;">
+          <h2 style="margin-bottom: 0.5rem;">Join Our Vibrant Community</h2>
+          <p class="text-muted" style="max-width: 550px; margin: 0 auto 1.5rem auto;">
+            Become part of a collaborative network that fosters learning, creativity, and personal growth.
+          </p>
+          <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <a href="register.jsp" class="btn btn-primary">Join SkillShareHub</a>
+            <a href="login.jsp" class="btn btn-outline">Log In</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-content">
+      <div>
+        <p class="font-bold" style="margin-bottom: 0.25rem; color: #0041C2 ; text-align: center;">SkillShareHub</p>
+        <p class="text-muted" style="margin-bottom: 0; font-size: 0.85rem;">Learn Together, <span style="color: #7FFF00;">Grow Together</span>. A peer-to-peer learning network.</p>
+      </div>
+
+      <div style="display: flex; gap: 1.5rem; align-items: center; font-size: 0.875rem;">
+        <a href="pages/register.jsp" class="text-muted">Register</a>
+        <a href="pages/login.jsp" class="text-muted">Sign In</a>
+        <a href="AboutUs.html" class="text-muted">About</a>
+        <a href="ContacUs.html" class="text-muted">Contact Us</a>
+      </div>
+
+      <div>
+        <p class="text-muted" style="margin-bottom: 0; font-size: 0.8rem;">
+          &copy; 2026 SkillShareHub. Built for student collaboration.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Theme Switching & Mobile Navigation Script -->
+  <script>
+    (function() {
+      // 1. Theme Persistence
+      var savedTheme = localStorage.getItem('ssh_theme');
+      var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+      
+      document.documentElement.setAttribute('data-theme', currentTheme);
+
+      function updateThemeIcons(theme) {
+        var icon = document.getElementById('themeIcon');
+        if (icon) {
+          icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+      }
+
+      updateThemeIcons(currentTheme);
+
+      var toggleBtn = document.getElementById('themeToggleBtn');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', function() {
+          var activeTheme = document.documentElement.getAttribute('data-theme');
+          var nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', nextTheme);
+          localStorage.setItem('ssh_theme', nextTheme);
+          updateThemeIcons(nextTheme);
+        });
+      }
+
+      // 2. Mobile Menu Toggle
+      var menuBtn = document.getElementById('mobileMenuBtn');
+      var navLinks = document.getElementById('navLinks');
+      if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', function() {
+          var isOpen = navLinks.classList.toggle('is-open');
+          var hamburger = document.getElementById('hamburgerIcon');
+          if (hamburger) {
+            hamburger.textContent = isOpen ? '✕' : '☰';
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

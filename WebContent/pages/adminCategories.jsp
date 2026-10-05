@@ -229,7 +229,7 @@
     </main>
 
     <!-- Shared Sticky Footer -->
-    <%@ include file="/includes/footer.jsp" %>
+    <%@ include file="../includes/adminFooter.jsp" %>
 
 </body>
 </html>

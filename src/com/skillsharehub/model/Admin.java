@@ -5,8 +5,24 @@ public class Admin {
     private int adminId;
     private String username;
     private String password;
+    
+    public Admin() {
+		
+	}
 
-    public int getAdminId() {
+    @Override
+	public String toString() {
+		return "Admin [adminId=" + adminId + ", username=" + username + ", password=" + password + "]";
+	}
+
+	public Admin(int adminId, String username, String password) {
+		super();
+		this.adminId = adminId;
+		this.username = username;
+		this.password = password;
+	}
+
+	public int getAdminId() {
         return adminId;
     }
 

@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Skill Share Hub</title>
+    <title>Admin Register - Skill Share Hub</title>
     <link rel="icon" href="../images/logo.png" type="image/png">
     <link rel="stylesheet" href="../css/assets/style2.css">
     <style>
@@ -68,7 +68,7 @@
 <body>
 
     <!-- Shared Navigation -->
-<nav class="navbar" role="navigation" aria-label="Main Navigation">
+ <nav class="navbar" role="navigation" aria-label="Main Navigation">
   <div class="container nav-container">
     <!-- Brand Logo & Title -->
     <a href="<%= contextPath %>/" class="nav-brand" aria-label="SkillShareHub Home">
@@ -84,8 +84,8 @@
     <!-- Navigation Items -->
     <ul class="nav-links" id="navLinks">
         <!-- Admin Guest Navigation -->
-        <li><a href="<%= contextPath %>/pages/adminRegister.jsp" class="nav-link"></a></li>
-        <li><a href="<%= contextPath %>/pages/adminLogin.jsp" class="nav-link">Login</a></li>
+        <li><a href="<%= contextPath %>/pages/login.jsp" class="nav-link">User Login</a></li>
+        <li><a href="<%= contextPath %>/pages/adminLogin.jsp" class="nav-link">Admin Login</a></li>
         <li><a href="<%= contextPath %>/pages/adminRegister.jsp" class="btn btn-primary btn-sm">Register</a></li>
 
 
@@ -105,15 +105,15 @@
             <div class="admin-login-container">
                 <div class="text-center" style="margin-bottom: 1.5rem;">
                     <span class="admin-badge-indicator">System Administration</span>
-                    <h1 class="page-title" style="font-size: 1.85rem; margin-bottom: 0.25rem;">Admin Login</h1>
-                    <p class="text-muted" style="margin-bottom: 0;">Access management and moderation tools</p>
+                    <h1 class="page-title" style="font-size: 1.85rem; margin-bottom: 0.25rem;">Admin Register</h1>
+                    <p class="text-muted" style="margin-bottom: 0;">For Manage Skill Share Hub Tools</p>
                 </div>
 
                 <div class="card admin-card">
 
-                    <form action="adminLogin" method="post">
+                    <form action="adminRegister" method="post">
                         <div class="form-group">
-                            <label for="username" class="form-label required">User name:</label>
+                            <label for="username" class="form-label required">Admin name:</label>
                             <input type="text" 
                                    id="username" 
                                    name="username" 
@@ -133,13 +133,17 @@
                                    required 
                                    autocomplete="current-password">
                         </div>
+                        <!-- <div class="form-group">
+                            <label class="form-label required">Enter Any Favorite Character : </label>
+                            <input type="text" name="fullname" class="form-control" placeholder="Enter Any Favorite Character" required>
+                        </div> -->
 
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="submit" class="btn btn-primary">Register</button>
                     </form>
 
                     <p class="back-to-client">
                         Not an administrator?
-                        <a href="login.jsp" class="font-medium">User Login</a>
+                        <a href="adminLogin.jsp" class="font-medium">User Login</a>
                     </p>
                 </div>
             </div>

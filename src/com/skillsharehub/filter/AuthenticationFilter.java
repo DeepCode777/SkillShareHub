@@ -48,9 +48,11 @@ public class AuthenticationFilter implements Filter {
 
         return resource.equals("/pages/login.jsp")
         		|| resource.equals("/pages/adminLogin.jsp")
+        		|| resource.equals("/pages/adminRegister.jsp")
                 || resource.equals("/pages/register.jsp")
                 || resource.equals("/pages/login")
                 || resource.equals("/pages/adminLogin")
+                || resource.equals("/pages/adminRegister")
                 || resource.equals("/pages/register")
                 || resource.equals("/pages/logout");
     }
